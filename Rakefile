@@ -3,6 +3,7 @@ require "rspec/core/rake_task"
 require "faraday"
 require "judopay"
 require "json"
+require "vcr"
 
 RSpec::Core::RakeTask.new
 
@@ -52,6 +53,7 @@ namespace :faraday do
       puts request.headers.inspect
       puts request.body.inspect
     end
+
     puts response.body
   end
 
@@ -60,10 +62,19 @@ namespace :faraday do
     judo_token = ENV['JUDO_TOKEN']
     judo_secret = ENV['JUDO_SECRET']
 
+    VCR.configure do |c|
+      c.allow_http_connections_when_no_cassette = true
+      c.hook_into :faraday
+    end
+    
     conn = Faraday.new(:url => judo_endpoint) do |c|
       c.use Faraday::Request::UrlEncoded  # encode request params as "www-form-urlencoded"
       c.use Faraday::Response::Logger     # log request & response to STDOUT
       c.use Faraday::Adapter::NetHttp     # perform requests with Net::HTTP
+      c.use VCR::Middleware::Faraday do |cassette|
+        cassette.name    'faraday_example'
+        cassette.options :record => :new_episodes
+      end      
     end
 
     conn.headers['API-Version'] = Judopay::API.api_version
