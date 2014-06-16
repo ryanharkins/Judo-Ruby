@@ -1,3 +1,6 @@
+require 'faraday'
+require 'faraday_middleware'
+
 module Judopay
   # @private
   module Connection
@@ -6,25 +9,29 @@ module Judopay
     def connection(raw=false)
       options = {
         :headers => {
-          'Accept' => "application/#{format}; charset=utf-8", 
-          'User-Agent' => user_agent,
-          'API-Version' => API.api_version
+          'Accept' => "application/#{Judopay.configuration.format}; charset=utf-8", 
+          'User-Agent' => Judopay.configuration.user_agent,
+          'API-Version' => Judopay.configuration.api_version,
+          'Content-Type' => 'application/json'          
         },
-        :proxy => proxy,
-        :url => endpoint,
-      }.merge(connection_options)
-
-      Faraday::Connection.new(options) do |connection|
-        connection.use Faraday::Request::UrlEncoded
-        connection.use FaradayMiddleware::Mashify unless raw
+        :url => Judopay.configuration.endpoint_url
+      }
+      
+      connection = Faraday::Connection.new(options) do |faraday|
+        faraday.adapter Faraday.default_adapter
+        faraday.use Faraday::Request::UrlEncoded
+        faraday.use Faraday::Response::Logger
+        #connection.use FaradayMiddleware::Mashify unless raw
         unless raw
-          case format.to_s.downcase
-          when 'json' then connection.use Faraday::Response::ParseJson
+          case Judopay.configuration.format.to_s
+          when 'json' then faraday.use Faraday::Response::ParseJson
           end
         end
-        connection.use FaradayMiddleware::RaiseHttpException
-        connection.adapter(adapter)
+        #connection.use FaradayMiddleware::RaiseHttpException
       end
+      
+      connection.basic_auth(Judopay.configuration.api_token, Judopay.configuration.api_secret)
+      connection
     end
   end
 end
