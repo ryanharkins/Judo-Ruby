@@ -7,3 +7,9 @@ describe Judopay do
 		expect(true).to eq(true)
 	end
 end
+
+describe Judopay::Transaction do
+  it "should list all transactions" do
+    expect(Judopay::Transaction.all).to be_a(Array)
+  end
+end
