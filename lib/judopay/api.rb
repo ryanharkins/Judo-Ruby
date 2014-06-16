@@ -1,9 +1,11 @@
-module Judopay
-  class API
-    @api_version = '4.0.0'
+require File.expand_path('../connection', __FILE__)
+require File.expand_path('../request', __FILE__)
 
-    class << self
-      attr_accessor :api_version
-    end
+module Judopay
+  # @private
+  class API
+    include Connection
+    include Request
+    #include OAuth
   end
 end
