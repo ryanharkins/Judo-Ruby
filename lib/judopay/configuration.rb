@@ -1,3 +1,5 @@
+require 'faraday'
+
 module Judopay
   # Defines constants and methods related to configuration
   module Configuration
@@ -18,7 +20,7 @@ module Judopay
     # By default, don't set a user access token or secret
     DEFAULT_API_TOKEN = nil
     DEFAULT_API_SECRET = nil
-    DEFAULT_API_VERSION = 4.0.0
+    DEFAULT_API_VERSION = '4.0.0'
 
     # The adapter that will be used to connect if none is set
     #
@@ -54,11 +56,6 @@ module Judopay
 
     # @private
     attr_accessor *VALID_OPTIONS_KEYS
-
-    # When this module is extended, set all configuration options to their default values
-    def self.extended(base)
-      base.reset
-    end
 
     # Convenience method to allow configuration options to be set in a block
     def configure
