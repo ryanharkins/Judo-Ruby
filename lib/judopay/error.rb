@@ -5,6 +5,9 @@ module Judopay
   # Raised when API returns the HTTP status code 400
   class BadRequest < Error; end
 
+  # Raised when API returns the HTTP status code 401
+  class NotAuthorized < Error; end
+
   # Raised when API returns the HTTP status code 404
   class NotFound < Error; end
 

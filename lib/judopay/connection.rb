@@ -1,5 +1,6 @@
 require 'faraday'
 require 'faraday_middleware'
+require_relative '../faraday/raise_http_exception'
 
 module Judopay
   # @private
@@ -20,14 +21,14 @@ module Judopay
       connection = Faraday::Connection.new(options) do |faraday|
         faraday.adapter Faraday.default_adapter
         faraday.use Faraday::Request::UrlEncoded
-        #faraday.use Faraday::Response::Logger
+        faraday.use Faraday::Response::Logger
         faraday.use Faraday::Response::Rashify unless raw
         unless raw
           case Judopay.configuration.format.to_s
           when 'json' then faraday.use Faraday::Response::ParseJson
           end
         end
-        #connection.use FaradayMiddleware::RaiseHttpException
+        faraday.use FaradayMiddleware::RaiseHttpException
       end
       
       connection.basic_auth(Judopay.configuration.api_token, Judopay.configuration.api_secret)

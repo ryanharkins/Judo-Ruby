@@ -4,7 +4,6 @@ require File.expand_path('../judopay/payment', __FILE__)
 require File.expand_path('../judopay/transaction', __FILE__)
 require File.expand_path('../judopay/response', __FILE__)
 
-
 module Judopay
   class << self
     attr_accessor :configuration
