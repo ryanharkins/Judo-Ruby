@@ -19,16 +19,19 @@ namespace :transactions do
     end
     
     transactions = Judopay::Transaction.all
+   
+    puts transactions.inspect
+    
     puts transactions['resultCount'].to_s + " results\n"
     
-    rows = []
     transactions['results'].each do |result|
+      rows = []      
       result.each do |key,value|
         rows.push([key, value.inspect])
       end
+      
+      puts Terminal::Table.new :rows => rows
     end
-
-    puts Terminal::Table.new :rows => rows
   end
 end
 

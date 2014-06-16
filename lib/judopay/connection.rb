@@ -21,7 +21,7 @@ module Judopay
         faraday.adapter Faraday.default_adapter
         faraday.use Faraday::Request::UrlEncoded
         #faraday.use Faraday::Response::Logger
-        #connection.use FaradayMiddleware::Mashify unless raw
+        faraday.use Faraday::Response::Rashify unless raw
         unless raw
           case Judopay.configuration.format.to_s
           when 'json' then faraday.use Faraday::Response::ParseJson
