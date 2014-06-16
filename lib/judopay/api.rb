@@ -6,6 +6,6 @@ module Judopay
   class API
     include Connection
     include Request
-    #include OAuth
+    # include OAuth
   end
 end
