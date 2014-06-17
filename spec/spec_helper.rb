@@ -87,6 +87,9 @@ RSpec.configure do |config|
 =end
 end
 
+# Use Judopay default configuration
+Judopay.configure
+
 def stub_get(path)
   stub_request(:get, /judopay/i)
 end

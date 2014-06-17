@@ -1,20 +1,11 @@
 require 'spec_helper'
 
-describe Judopay do
-	it "should pass" do
-    #payment = FactoryGirl.build(:payment)
-		expect(true).to eq(true)
-	end
-end
-
 describe Judopay::Transaction do
 
   it "should list all transactions" do
     stub_get('/transactions').
       to_return(:status => 200,
                 :body => lambda { |request| fixture("transactions/all.json") })
-
-    Judopay.configure
 
     transactions = Judopay::Transaction.all
     expect(transactions).to be_a(Hash)
@@ -26,28 +17,11 @@ describe Judopay::Transaction do
       to_return(:status => 200,
                 :body => lambda { |request| fixture("transactions/find.json") })
 
-    Judopay.configure
-
     receipt_id = '439539'
     transaction = Judopay::Transaction.find(receipt_id)
     expect(transaction).to be_a(Hash)
     expect(transaction.receipt_id).to eq(receipt_id)                   
   end
-
-  it "should return a NotFound exception if a single transaction is not found" do
-    stub_get('/transactions/999999').
-      to_return(:status => 404,
-                :body => lambda { |request| fixture("transactions/find_not_found.json") })
-
-    Judopay.configure
-
-    receipt_id = 999999
-    transaction = Judopay::Transaction.find(receipt_id)
-    puts transaction.inspect
-    # We will need to stub with Faraday if we want to test the middleware
-    #expect { Judopay::Transaction.find(receipt_id) }.to raise_exception(Judopay::NotFound)
-  end
-
 end
 
 describe Faraday::Response do
@@ -60,7 +34,7 @@ describe Faraday::Response do
     500 => Judopay::InternalServerError,
     503 => Judopay::ServiceUnavailable
   }.each do |status, exception|
-    context "when HTTP status is #{status}" do
+    context "when response status is #{status}" do
 
       before do
         stub_get('/transactions').
