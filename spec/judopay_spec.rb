@@ -10,19 +10,21 @@ end
 describe Judopay::Transaction do
 
   it "should list all transactions" do
-    # Judopay.configure do |config|
-    #   config.api_token = ENV['JUDO_TOKEN']
-    #   config.api_secret = ENV['JUDO_SECRET']
-    # end
+    stub_get('/transactions').
+      to_return(:status => 200,
+                :body => lambda { |request| JSON.generate({'results' => [{'amount' => 1.01}]}) })
 
-    # expect(Judopay::Transaction.all).to be_a(Hash)
+    Judopay.configure
+
+    transactions = Judopay::Transaction.all
+    expect(transactions).to be_a(Hash)
+    expect(transactions.results[0].amount).to equal(1.01)
   end
 end
 
 describe Faraday::Response do
 
-  Judopay.configure do |config|
-  end
+  Judopay.configure
 
   {
     400 => Judopay::BadRequest,
