@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'judopay'
   spec.version       = Judopay::VERSION
   spec.authors       = ['Chris Rosser']
-  spec.email         = ['chris@bluefuton.com']
+  spec.email         = ['chris@bluefuton.com'] # Developer support email
   spec.summary       = 'Ruby SDK wrapper for the Judopay REST API'
   spec.description   = ''
   spec.homepage      = 'http://www.judopay.com'
@@ -22,7 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 1.5'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'vcr'
   spec.add_development_dependency 'yard'
   spec.add_development_dependency 'yard-xml'
   spec.add_development_dependency 'factory_girl'

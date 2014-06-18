@@ -3,7 +3,6 @@ require 'rspec/core/rake_task'
 require 'faraday'
 require 'judopay'
 require 'json'
-require 'vcr'
 require 'terminal-table'
 
 RSpec::Core::RakeTask.new
