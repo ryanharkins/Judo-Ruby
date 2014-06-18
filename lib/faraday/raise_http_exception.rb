@@ -8,7 +8,8 @@ module FaradayMiddleware
     def call(env)
       @app.call(env).on_complete do |response|
         body = JSON.parse(response.body)
-        case body['errorType'].to_i
+        errorType = body['errorType'].to_i # Can provide additional information
+        case response.status.to_i
         when 400
           raise Judopay::BadRequest, error_message_400(response)
         when 401
@@ -36,7 +37,7 @@ module FaradayMiddleware
     private
 
     def error_message_400(response)
-      "#{response[:method].to_s.upcase} #{response[:url].to_s}: #{response[:status]}#{error_body(response[:body])}"
+      "#{response[:method].to_s.upcase} #{response[:url].to_s}: #{response[:status]}#{response.body}"
     end
 
     def error_body(body)
