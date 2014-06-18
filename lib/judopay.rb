@@ -1,8 +1,8 @@
-require "judopay/version"
-require File.expand_path('../judopay/api', __FILE__)
-require File.expand_path('../judopay/payment', __FILE__)
-require File.expand_path('../judopay/transaction', __FILE__)
-require File.expand_path('../judopay/response', __FILE__)
+require_relative 'judopay/version'
+require_relative 'judopay/api'
+require_relative 'judopay/payment'
+require_relative 'judopay/transaction'
+require_relative 'judopay/response'
 
 module Judopay
   class << self
