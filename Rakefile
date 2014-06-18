@@ -12,15 +12,11 @@ task :test => :spec
 
 namespace :transactions do 
   task :list do 
-    Judopay.configure do |config|
-      config.api_token = ENV['JUDO_TOKEN']
-      config.api_secret = ENV['JUDO_SECRET']
-    end
+    configure
     
     transactions = Judopay::Transaction.all
    
     puts transactions.inspect
-    
     puts transactions['resultCount'].to_s + " results\n"
     
     transactions['results'].each do |result|
@@ -30,6 +26,21 @@ namespace :transactions do
       end
       
       puts Terminal::Table.new :rows => rows
+    end
+  end
+
+  task :save do
+    configure
+
+    transaction = Judopay::Transaction.new
+    transaction.your_consumer_reference = 'banana'
+    transaction.save
+  end
+
+  def configure
+    Judopay.configure do |config|
+      config.api_token = ENV['JUDO_TOKEN']
+      config.api_secret = ENV['JUDO_SECRET']
     end
   end
 end
