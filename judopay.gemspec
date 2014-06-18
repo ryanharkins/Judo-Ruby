@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'judopay'
   spec.version       = Judopay::VERSION
   spec.authors       = ['Chris Rosser']
-  spec.email         = ['chris@bluefuton.com'] # Developer support email
+  spec.email         = ['developersupport@judopay.com']
   spec.summary       = 'Ruby SDK wrapper for the Judopay REST API'
   spec.description   = ''
   spec.homepage      = 'http://www.judopay.com'
