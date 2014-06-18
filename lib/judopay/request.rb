@@ -1,4 +1,5 @@
 require 'openssl'
+require 'json'
 
 module Judopay
   # Defines HTTP request methods
@@ -33,11 +34,11 @@ module Judopay
           request.url(path, options)
         when :post, :put
           request.path = path
-          request.body = options unless options.empty?
+          request.body = JSON.generate(options) unless options.empty?
         end
       end
       return response if raw
-      return Response.create( response.body )
+      return Response.create(response.body)
     end
   end
 end

@@ -1,5 +1,6 @@
 require 'virtus'
 require 'active_model'
+require_relative '../patches/hash'
 
 module Judopay
   class Transaction
@@ -11,7 +12,7 @@ module Judopay
 
     def save
       api = Judopay::API.new
-      api.post('transactions/payments', self.attributes)
+      api.post('transactions/payments', self.attributes.camel_case_keys!)
     end
 
     def self.all

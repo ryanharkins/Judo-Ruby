@@ -33,7 +33,8 @@ namespace :transactions do
     configure
 
     transaction = Judopay::Transaction.new
-    transaction.your_consumer_reference = 'banana'
+    transaction.your_consumer_reference = '123'
+    transaction.your_payment_reference = '456'
     transaction.save
   end
 
@@ -41,6 +42,7 @@ namespace :transactions do
     Judopay.configure do |config|
       config.api_token = ENV['JUDO_TOKEN']
       config.api_secret = ENV['JUDO_SECRET']
+      #config.endpoint_url = 'https://api-yourapihere-com-5oon7fxkyui4.runscope.net/path/'
     end
   end
 end
