@@ -20,7 +20,8 @@ module Judopay
                   :api_secret,
                   :format, 
                   :endpoint_url,
-                  :user_agent
+                  :user_agent,
+                  :judo_id
 
     def initialize
       # Set defaults
