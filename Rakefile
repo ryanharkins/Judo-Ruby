@@ -32,6 +32,12 @@ namespace :transactions do
   task :save do
     configure
 
+    card_address = Judopay::CardAddress.new(
+      :line1 => '32 Edward Street',
+      :town => 'Camborne',
+      :postcode => 'TR14 8PA'
+    )
+
     transaction = Judopay::Transaction.new(
       :your_consumer_reference => '123',
       :your_payment_reference => '456',
@@ -39,9 +45,12 @@ namespace :transactions do
       :amount => 5.01,
       :card_number => '4976000000003436',
       :expiry_date => '12/15',
-      :cv2 => '452'
+      :cv2 => '452',
+      :card_address => card_address
     )
-    transaction.save
+    
+    response = transaction.save
+    puts response.inspect
   end
 
   def configure
