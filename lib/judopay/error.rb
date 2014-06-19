@@ -11,6 +11,9 @@ module Judopay
   # Raised when API returns the HTTP status code 404
   class NotFound < Error; end
 
+  # Raised when API returns the HTTP status code 409
+  class Conflict < Error; end
+
   # Raised when API returns the HTTP status code 500
   class InternalServerError < Error; end
 

@@ -17,6 +17,8 @@ module FaradayMiddleware
           raise Judopay::NotAuthorized, error_message_500(response, 'Check your login credentials and permissions') # Improve this message
         when 404
           raise Judopay::NotFound, error_message_400(response)
+        when 409
+          raise Judopay::Conflict, error_message_400(response)
         when 500
           raise Judopay::InternalServerError, error_message_500(response, "Something is technically wrong.")
         when 502

@@ -5,6 +5,7 @@ describe Faraday::Response do
   {
     400 => Judopay::BadRequest,
     404 => Judopay::NotFound,
+    409 => Judopay::Conflict,
     500 => Judopay::InternalServerError,
     503 => Judopay::ServiceUnavailable
   }.each do |status, exception|
