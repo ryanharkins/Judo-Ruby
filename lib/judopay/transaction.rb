@@ -7,8 +7,14 @@ module Judopay
     include Virtus.model
     include ActiveModel::Validations
 
-    attribute :your_consumer_reference, String
-    attribute :your_payment_reference, String
+    attribute :your_consumer_reference, String # required
+    attribute :your_payment_reference, String # required
+    attribute :your_payment_meta_data, Hash
+    attribute :judo_id, String # required
+    attribute :amount, Float # required
+    attribute :card_number, String # required for card transactions
+    attribute :expiry_date, String # required for card transactions
+    attribute :cv2, String  # required for card transactions
 
     def save
       api = Judopay::API.new

@@ -32,9 +32,15 @@ namespace :transactions do
   task :save do
     configure
 
-    transaction = Judopay::Transaction.new
-    transaction.your_consumer_reference = '123'
-    transaction.your_payment_reference = '456'
+    transaction = Judopay::Transaction.new(
+      :your_consumer_reference => '123',
+      :your_payment_reference => '456',
+      :judo_id => ENV['JUDO_ID'],
+      :amount => 5.01,
+      :card_number => '4976000000003436',
+      :expiry_date => '12/15',
+      :cv2 => '452'
+    )
     transaction.save
   end
 
