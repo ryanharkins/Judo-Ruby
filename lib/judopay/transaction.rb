@@ -25,7 +25,7 @@ module Judopay
     def save
       api = Judopay::API.new
       self.judo_id = Judopay.configuration.judo_id if self.judo_id.nil?
-      api.post('transactions/payments', self.attributes.camel_case_keys!)
+      api.post('transactions/payments', self)
     end
 
     def self.all

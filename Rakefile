@@ -46,9 +46,13 @@ namespace :transactions do
       :card_number => '4976000000003436',
       :expiry_date => '12/15',
       :cv2 => '452',
-      :card_address => card_address
+      :card_address => card_address,
+      :consumer_location => {
+        :latitude => 51.5033630,
+        :longitude => -0.1276250
+      }
     )
-    
+
     response = transaction.save
     puts response.inspect
   end

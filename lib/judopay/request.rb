@@ -34,7 +34,7 @@ module Judopay
           request.url(path, options)
         when :post, :put
           request.path = path
-          request.body = JSON.generate(options) unless options.empty?
+          request.body = Judopay::Serializer.new(options).as_json unless options.nil?
         end
       end
       return response if raw

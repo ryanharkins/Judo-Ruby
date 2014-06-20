@@ -10,6 +10,6 @@ module Judopay
     attribute :line2, String
     attribute :line3, String
     attribute :town, String
-    attribute :post_code, String
+    attribute :postcode, String
   end
 end
