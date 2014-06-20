@@ -19,10 +19,13 @@ module Judopay
     attribute :cv2, String  # required for card transactions
     attribute :card_address, Judopay::CardAddress
     attribute :consumer_location, Judopay::ConsumerLocation
-    attribute :mobile_number
-    attribute :email_address
+    attribute :mobile_number, String
+    attribute :email_address, String
 
-    def save
+    validates_presence_of :judo_id
+
+    def create
+      return false unless valid? 
       api = Judopay::API.new
       self.judo_id = Judopay.configuration.judo_id if self.judo_id.nil?
       api.post('transactions/payments', self)
