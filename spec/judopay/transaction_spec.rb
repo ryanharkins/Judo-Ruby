@@ -22,7 +22,7 @@ describe Judopay::Transaction do
     expect(transaction.receipt_id).to eq(receipt_id)                   
   end
 
-  it "should save a new transaction given valid card details" do
+  it "should create a new transaction given valid card details" do
     stub_post('/transactions/payments').
       to_return(:status => 200,
                 :body => lambda { |request| fixture("transactions/save.json") })
@@ -37,13 +37,13 @@ describe Judopay::Transaction do
       :cv2 => '452'
     )
     
-    response = transaction.save
+    response = transaction.create
 
     expect(response).to be_a(Hash)
     expect(response.result).to eq("Success")
   end
 
-  it "should not save a new transaction if the card is declined" do
+  it "should not create a new transaction if the card is declined" do
     stub_post('/transactions/payments').
       to_return(:status => 200,
                 :body => lambda { |request| fixture("transactions/save_declined.json") })
@@ -58,9 +58,15 @@ describe Judopay::Transaction do
       :cv2 => '452'
     )
     
-    response = transaction.save
+    response = transaction.create
 
     expect(response).to be_a(Hash)
     expect(response.result).to eq("Declined")    
+  end
+
+  it "should return a bad request exception if basic validation fails" do
+      expect(lambda do
+        Judopay::Transaction.new.create
+      end).to raise_error(Judopay::BadRequest)    
   end
 end

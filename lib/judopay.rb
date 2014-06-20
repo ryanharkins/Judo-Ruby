@@ -4,6 +4,7 @@ require_relative 'judopay/payment'
 require_relative 'judopay/transaction'
 require_relative 'judopay/response'
 require_relative 'judopay/serializer'
+require_relative 'judopay/error'
 
 module Judopay
   class << self

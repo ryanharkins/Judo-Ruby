@@ -22,10 +22,16 @@ module Judopay
     attribute :mobile_number, String
     attribute :email_address, String
 
-    validates_presence_of :judo_id
+    validates_presence_of :your_consumer_reference,
+                          :your_payment_reference,
+                          :judo_id,
+                          :amount,
+                          :card_number,
+                          :expiry_date,
+                          :cv2
 
     def create
-      return false unless valid? 
+      self.check_validation
       api = Judopay::API.new
       self.judo_id = Judopay.configuration.judo_id if self.judo_id.nil?
       api.post('transactions/payments', self)
@@ -40,5 +46,14 @@ module Judopay
       api = Judopay::API.new
       api.get('transactions/' + receipt_id.to_i.to_s)
     end
-  end
+
+    protected
+    # Has the pre-validation found any problems?
+    # We check the basic fields have been completed to avoid the round trip to the API
+    def check_validation
+      unless valid?
+        raise Judopay::BadRequest, 'Validation failed: ' + self.errors.full_messages.join('; ')
+      end
+    end  
+  end  
 end
