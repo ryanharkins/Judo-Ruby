@@ -4,6 +4,9 @@ require 'factory_girl'
 require 'factories'
 require 'webmock/rspec'
 
+# Added to counter deprecation warning
+I18n.enforce_available_locales = true
+
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include WebMock::API
