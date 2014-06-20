@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative '../../lib/judopay/models/transaction'
 
 describe Judopay::Transaction do
   it "should list all transactions" do

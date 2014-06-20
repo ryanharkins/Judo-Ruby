@@ -1,7 +1,5 @@
 require_relative 'judopay/version'
 require_relative 'judopay/api'
-require_relative 'judopay/payment'
-require_relative 'judopay/transaction'
 require_relative 'judopay/response'
 require_relative 'judopay/serializer'
 require_relative 'judopay/error'

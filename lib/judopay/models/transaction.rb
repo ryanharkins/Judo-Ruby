@@ -1,14 +1,9 @@
-require 'virtus'
-require 'active_model'
-require_relative '../patches/hash'
+require_relative '../model'
 require_relative 'card_address'
 require_relative 'consumer_location'
 
 module Judopay
-  class Transaction
-    include Virtus.model
-    include ActiveModel::Validations
-
+  class Transaction < Model
     attribute :your_consumer_reference, String # required
     attribute :your_payment_reference, String # required
     attribute :your_payment_meta_data, Hash
@@ -46,14 +41,5 @@ module Judopay
       api = Judopay::API.new
       api.get('transactions/' + receipt_id.to_i.to_s)
     end
-
-    protected
-    # Has the pre-validation found any problems?
-    # We check the basic fields have been completed to avoid the round trip to the API
-    def check_validation
-      unless valid?
-        raise Judopay::BadRequest, 'Validation failed: ' + self.errors.full_messages.join('; ')
-      end
-    end  
   end  
 end

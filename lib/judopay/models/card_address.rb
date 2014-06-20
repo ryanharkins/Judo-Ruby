@@ -1,11 +1,7 @@
-require 'virtus'
-require 'active_model'
+require_relative '../model'
 
 module Judopay
-  class CardAddress
-    include Virtus.model
-    include ActiveModel::Validations
-
+  class CardAddress < Model
     attribute :line1, String
     attribute :line2, String
     attribute :line3, String
