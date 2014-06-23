@@ -11,6 +11,10 @@ I18n.enforce_available_locales = true
 RSpec.configure do |config|
   #config.include FactoryGirl::Syntax::Methods
   config.include WebMock::API
+
+  config.expect_with :rspec do |c|
+    c.syntax = [:expect, :should]
+  end
 end
 
 # Use Judopay default configuration
