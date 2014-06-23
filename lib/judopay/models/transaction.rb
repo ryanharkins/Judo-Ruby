@@ -2,7 +2,7 @@ require_relative '../model'
 
 module Judopay
   class Transaction < Model
-    def self.all
+    def self.all(*options)
       api = Judopay::API.new
       api.get('transactions')
     end

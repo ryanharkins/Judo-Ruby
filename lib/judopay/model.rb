@@ -6,6 +6,10 @@ module Judopay
   class Model
     include Virtus.model
     include ActiveModel::Validations
+    @valid_paging_options = [:sort, :offset, :page_size]
+    @sort = 'time-descending'
+    @offset = 0
+    @page_size = 10
 
     protected
     # Has the pre-validation found any problems?
