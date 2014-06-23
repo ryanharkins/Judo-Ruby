@@ -8,18 +8,23 @@ module Judopay
     include Virtus.model
     include ActiveModel::Validations
     @@valid_paging_options = [:sort, :offset, :page_size]
-    @@resource_path = nil
+
+    class << self
+      attr_accessor :resource_path
+    end
 
     def self.all(options = {})
+      self.check_for_resource_path
       api = Judopay::API.new
       valid_options = self.valid_options(options).camel_case_keys!
-      uri = @@resource_path + '?' + valid_options.to_query_string
+      uri = self.resource_path + '?' + valid_options.to_query_string
       api.get(uri)
     end
 
     def self.find(receipt_id)
+      self.check_for_resource_path
       api = Judopay::API.new
-      api.get(@@resource_path + receipt_id.to_i.to_s)
+      api.get(self.resource_path + receipt_id.to_i.to_s)
     end
 
     protected
@@ -29,7 +34,13 @@ module Judopay
       unless valid?
         raise Judopay::BadRequest, 'Validation failed: ' + self.errors.full_messages.join('; ')
       end
-    end    
+    end
+
+    def self.check_for_resource_path
+      if self.resource_path.nil?
+        raise Judopay::Error, 'This action is not supported by the API'
+      end
+    end
 
     # Take an options hash and filter all but the valid keys
     def self.valid_options(options)

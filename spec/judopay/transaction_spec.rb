@@ -45,7 +45,7 @@ describe Judopay::Transaction do
 
     WebMock.should have_requested(
       :get, 
-      Judopay.configuration.endpoint_url + '/transactions/'
+      Judopay.configuration.endpoint_url + '/transactions'
     ).with(:query => expected_request_options)
   end
 end

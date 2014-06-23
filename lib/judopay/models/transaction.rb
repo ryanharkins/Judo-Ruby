@@ -3,6 +3,6 @@ require_relative '../../patches/hash'
 
 module Judopay
   class Transaction < Model
-    @@resource_path = 'transactions/'
+    self.resource_path = 'transactions'
   end  
 end
