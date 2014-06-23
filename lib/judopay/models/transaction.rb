@@ -1,10 +1,12 @@
 require_relative '../model'
+require_relative '../../patches/hash'
 
 module Judopay
   class Transaction < Model
-    def self.all(*options)
+    def self.all(options = {})
       api = Judopay::API.new
-      api.get('transactions')
+      uri = 'transactions?' + self.valid_options(options).to_query_string
+      api.get(uri)
     end
 
     def self.find(receipt_id)

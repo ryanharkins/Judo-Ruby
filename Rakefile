@@ -13,11 +13,15 @@ task :default => :spec
 task :test => :spec
 
 namespace :transactions do 
-  task :list do 
+  task :all do 
     configure
     
-    transactions = Judopay::Transaction.all
-   
+    transactions = Judopay::Transaction.all(
+      :sort => 'time-ascending',
+      :offset => 1,
+      :page_size => 30
+    )
+
     puts transactions.inspect
     puts transactions['resultCount'].to_s + " results\n"
     
