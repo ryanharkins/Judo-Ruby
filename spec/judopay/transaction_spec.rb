@@ -22,4 +22,30 @@ describe Judopay::Transaction do
     expect(transaction).to be_a(Hash)
     expect(transaction.receipt_id).to eq(receipt_id)                   
   end
+
+  it "should send paging parameters with a request" do
+    stub_get('/transactions').
+      to_return(:status => 200,
+                :body => lambda { |request| fixture("transactions/all.json") })
+
+    options = {
+      :sort => 'time-descending',
+      :offset => 10,
+      :page_size => 5,
+      :dodgy_param => 'banana'
+    }
+
+    expected_request_options = {
+      :sort => 'time-descending',
+      :offset => 10,
+      :pageSize => 5
+    }
+
+    transactions = Judopay::Transaction.all(options)
+
+    WebMock.should have_requested(
+      :get, 
+      Judopay.configuration.endpoint_url + '/transactions/'
+    ).with(:query => expected_request_options)
+  end
 end

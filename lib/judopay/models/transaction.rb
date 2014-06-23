@@ -3,9 +3,12 @@ require_relative '../../patches/hash'
 
 module Judopay
   class Transaction < Model
+    @@resource_path = 'transactions/'
+
     def self.all(options = {})
       api = Judopay::API.new
-      uri = 'transactions?' + self.valid_options(options).to_query_string
+      valid_options = self.valid_options(options).camel_case_keys!
+      uri = @@resource_path + '?' + valid_options.to_query_string
       api.get(uri)
     end
 
