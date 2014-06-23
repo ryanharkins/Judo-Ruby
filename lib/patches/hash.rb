@@ -1,3 +1,4 @@
+require "addressable/uri"
 require_relative 'string'
 
 class Hash
@@ -12,5 +13,11 @@ class Hash
       end
     end
     self.replace(output_hash)
+  end
+
+  def to_query_string
+    uri = Addressable::URI.new
+    uri.query_values = self
+    uri.query
   end
 end

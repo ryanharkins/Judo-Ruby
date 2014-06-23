@@ -34,4 +34,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday'
   spec.add_dependency 'faraday_middleware'
   spec.add_dependency 'rash'
+  spec.add_dependency 'addressable'
 end
