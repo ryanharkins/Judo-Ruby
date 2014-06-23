@@ -4,6 +4,8 @@ require 'faraday'
 require 'judopay'
 require 'json'
 require 'terminal-table'
+require_relative 'lib/judopay/models/transaction'
+require_relative 'lib/judopay/models/card_payment'
 
 RSpec::Core::RakeTask.new
 
@@ -29,7 +31,7 @@ namespace :transactions do
     end
   end
 
-  task :save do
+  task :create do
     configure
 
     card_address = Judopay::CardAddress.new(
@@ -38,7 +40,7 @@ namespace :transactions do
       :postcode => 'TR14 8PA'
     )
 
-    transaction = Judopay::Transaction.new(
+    transaction = Judopay::CardPayment.new(
       :your_consumer_reference => '123',
       :your_payment_reference => '456',
       :judo_id => ENV['JUDO_ID'],
@@ -53,7 +55,7 @@ namespace :transactions do
       }
     )
 
-    response = transaction.save
+    response = transaction.create
     puts response.inspect
   end
 
