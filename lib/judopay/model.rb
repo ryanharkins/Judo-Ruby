@@ -27,6 +27,14 @@ module Judopay
       api.get(self.resource_path + receipt_id.to_i.to_s)
     end
 
+    def create
+      self.check_for_resource_path
+      self.check_validation
+      api = Judopay::API.new
+      self.judo_id = Judopay.configuration.judo_id if self.judo_id.nil?
+      api.post(self.resource_path, self)
+    end    
+
     protected
     # Has the pre-validation found any problems?
     # We check the basic fields have been completed to avoid the round trip to the API

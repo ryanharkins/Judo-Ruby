@@ -4,7 +4,9 @@ require_relative 'card_address'
 require_relative 'consumer_location'
 
 module Judopay
-  class CardPayment < Payment
+  class CardPayment < Model
+    self.resource_path = 'transactions/payments'
+
     attribute :your_consumer_reference, String # required
     attribute :your_payment_reference, String # required
     attribute :your_payment_meta_data, Hash
@@ -25,12 +27,5 @@ module Judopay
                           :card_number,
                           :expiry_date,
                           :cv2
-
-    def create
-      self.check_validation
-      api = Judopay::API.new
-      self.judo_id = Judopay.configuration.judo_id if self.judo_id.nil?
-      api.post('transactions/payments', self)
-    end
   end  
 end
