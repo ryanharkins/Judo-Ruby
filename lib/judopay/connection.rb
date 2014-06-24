@@ -1,6 +1,7 @@
 require 'faraday'
 require 'faraday_middleware'
 require_relative '../faraday/raise_http_exception'
+require_relative '../faraday/judo_mashify'
 
 module Judopay
   # @private
@@ -22,7 +23,7 @@ module Judopay
         faraday.adapter :httpclient
         faraday.use Faraday::Request::UrlEncoded
         #faraday.use Faraday::Response::Logger
-        faraday.use Faraday::Response::Rashify unless raw
+        faraday.use FaradayMiddleware::JudoMashify unless raw
         unless raw
           case Judopay.configuration.format.to_s
           when 'json' then faraday.use Faraday::Response::ParseJson
