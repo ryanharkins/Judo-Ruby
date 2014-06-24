@@ -6,6 +6,8 @@ require 'json'
 require 'terminal-table'
 require_relative 'lib/judopay/models/transaction'
 require_relative 'lib/judopay/models/card_payment'
+require_relative 'lib/judopay/models/card_preauth'
+require_relative 'lib/judopay/models/preauth'
 
 RSpec::Core::RakeTask.new
 
@@ -16,7 +18,7 @@ namespace :transactions do
   task :all do 
     configure
     
-    transactions = Judopay::Transaction.all(
+    transactions = Judopay::Preauth.all(
       :sort => 'time-ascending',
       :offset => 1,
       :page_size => 30
@@ -44,7 +46,7 @@ namespace :transactions do
       :postcode => 'TR14 8PA'
     )
 
-    transaction = Judopay::CardPayment.new(
+    transaction = Judopay::CardPreauth.new(
       :your_consumer_reference => '123',
       :your_payment_reference => '456',
       :judo_id => ENV['JUDO_ID'],
