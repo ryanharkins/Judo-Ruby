@@ -2,6 +2,7 @@ require_relative '../model'
 
 module Judopay
   class Payment < Model
-    self.resource_path = 'transactions/payments'
+    @resource_path = 'transactions/payments'
+    @valid_api_methods = [:all]
   end  
 end

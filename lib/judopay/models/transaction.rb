@@ -3,6 +3,7 @@ require_relative '../../patches/hash'
 
 module Judopay
   class Transaction < Model
-    self.resource_path = 'transactions'
+    @resource_path = 'transactions'
+    @valid_api_methods = [:all, :find]
   end  
 end

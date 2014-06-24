@@ -5,8 +5,9 @@ require_relative 'consumer_location'
 
 module Judopay
   class CardPayment < Model
-    self.resource_path = 'transactions/payments'
-
+    @resource_path = 'transactions/payments'
+    @valid_api_methods = [:create]
+    
     attribute :your_consumer_reference, String # required
     attribute :your_payment_reference, String # required
     attribute :your_payment_meta_data, Hash
