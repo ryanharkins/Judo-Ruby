@@ -17,10 +17,7 @@ module Judopay
     end
 
     def self.all(options = {})
-      if valid_api_methods.nil? || !valid_api_methods.include?(:all)
-        raise Judopay::Error, 'API method not supported'
-      end
-
+      check_api_method_is_supported(__method__)
       api = Judopay::API.new
       valid_options = self.valid_options(options).camel_case_keys!
       uri = self.resource_path + '?' + valid_options.to_query_string
@@ -28,19 +25,13 @@ module Judopay
     end
 
     def self.find(receipt_id)
-      if valid_api_methods.nil? || !valid_api_methods.include?(:find)
-        raise Judopay::Error, 'API method not supported'
-      end
-
+      check_api_method_is_supported(__method__)
       api = Judopay::API.new
       api.get(self.resource_path + receipt_id.to_i.to_s)
     end
 
     def create
-      unless valid_api_methods.include?(:create)
-        raise Judopay::Error, 'API method not supported'
-      end
-
+      check_api_method_is_supported(__method__)
       check_validation
       api = Judopay::API.new
       self.judo_id = Judopay.configuration.judo_id if self.judo_id.nil?
@@ -55,6 +46,10 @@ module Judopay
       self.class.valid_api_methods
     end
 
+    def check_api_method_is_supported(method)
+      self.class.check_api_method_is_supported(method)
+    end
+
     protected
     # Has the pre-validation found any problems?
     # We check the basic fields have been completed to avoid the round trip to the API
@@ -62,6 +57,12 @@ module Judopay
       unless valid?
         raise Judopay::BadRequest, 'Validation failed: ' + self.errors.full_messages.join('; ')
       end
+    end
+
+    def self.check_api_method_is_supported(method)
+      if valid_api_methods.nil? || !valid_api_methods.include?(method.to_sym)
+        raise Judopay::Error, 'API method not supported'
+      end      
     end
 
     # Take an options hash and filter all but the valid keys
