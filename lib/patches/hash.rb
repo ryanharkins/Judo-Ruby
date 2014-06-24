@@ -1,4 +1,4 @@
-require "addressable/uri"
+require 'addressable/uri'
 require_relative 'string'
 
 class Hash
