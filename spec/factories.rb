@@ -1,4 +1,4 @@
-models = ['card_payment', 'card_preauth', 'collection', 'refund', 'token_payment', 'token_preauth']
+models = %w(card_payment card_preauth collection refund token_payment token_preauth)
 models.each { |model| require_relative '../lib/judopay/models/' + model }
 
 FactoryGirl.define do
