@@ -17,13 +17,8 @@ describe Judopay::Refund do
       to_return(:status => 200,
                 :body => lambda { |request| fixture("card_payments/create.json") })
 
-    payment = Judopay::Refund.new(
-      :receipt_id => '1234',
-      :amount => 1.01,
-      :your_payment_reference => 'payment12412312'
-    )
-    
-    response = payment.create
+    refund = build(:refund)
+    response = refund.create
 
     expect(response).to be_a(Hash)
     expect(response.result).to eq("Success")

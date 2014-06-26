@@ -17,13 +17,8 @@ describe Judopay::Collection do
       to_return(:status => 200,
                 :body => lambda { |request| fixture("card_payments/create.json") })
 
-    payment = Judopay::Collection.new(
-      :receipt_id => '1234',
-      :amount => 1.01,
-      :your_payment_reference => 'payment12412312'
-    )
-    
-    response = payment.create
+    collection = build(:collection)
+    response = collection.create
 
     expect(response).to be_a(Hash)
     expect(response.result).to eq("Success")
