@@ -8,6 +8,7 @@ require_relative 'lib/judopay/models/transaction'
 require_relative 'lib/judopay/models/card_payment'
 require_relative 'lib/judopay/models/card_preauth'
 require_relative 'lib/judopay/models/preauth'
+require_relative 'lib/judopay/models/refund'
 
 RSpec::Core::RakeTask.new
 
@@ -18,7 +19,7 @@ namespace :transactions do
   task :all do 
     configure
     
-    transactions = Judopay::Preauth.all(
+    transactions = Judopay::Refund.all(
       :sort => 'time-ascending',
       :offset => 1,
       :page_size => 30
