@@ -5,6 +5,7 @@ require_relative '../patches/hash'
 require_relative 'error'
 
 module Judopay
+  # Base model for Judopay API model objects
   class Model
     include Virtus.model
     include ActiveModel::Validations
@@ -20,14 +21,14 @@ module Judopay
       check_api_method_is_supported(__method__)
       api = Judopay::API.new
       valid_options = self.valid_options(options).camel_case_keys!
-      uri = self.resource_path + '?' + valid_options.to_query_string
+      uri = resource_path + '?' + valid_options.to_query_string
       api.get(uri)
     end
 
     def self.find(receipt_id)
       check_api_method_is_supported(__method__)
       api = Judopay::API.new
-      api.get(self.resource_path + receipt_id.to_i.to_s)
+      api.get(resource_path + receipt_id.to_i.to_s)
     end
 
     def create
@@ -35,7 +36,7 @@ module Judopay
       check_judo_id
       check_validation
       api = Judopay::API.new
-      api.post(self.resource_path, self)
+      api.post(resource_path, self)
     end
 
     def resource_path
@@ -52,36 +53,36 @@ module Judopay
 
     def check_judo_id
       # Use judo_id from config if it hasn't been explicitly set
-      if self.respond_to?('judo_id') && self.judo_id.nil?
+      if self.respond_to?('judo_id') && judo_id.nil?
         self.judo_id = Judopay.configuration.judo_id
       end
-    end      
+    end
 
     protected
+
     # Has the pre-validation found any problems?
-    # We check the basic fields have been completed to avoid the round trip to the API
+    # We check the basics have been completed to avoid round trip to API
     def check_validation
       unless valid?
-        raise Judopay::BadRequest, 'Validation failed: ' + self.errors.full_messages.join('; ')
+        error_summary = errors.full_messages.join('; ')
+        fail Judopay::BadRequest, 'Validation failed: ' + error_summary
       end
     end
 
     def self.check_api_method_is_supported(method)
       if valid_api_methods.nil? || !valid_api_methods.include?(method.to_sym)
-        raise Judopay::Error, 'API method not supported'
-      end      
+        fail Judopay::Error, 'API method not supported'
+      end
     end
 
     # Take an options hash and filter all but the valid keys
     def self.valid_options(options)
       valid_options = {}
-      options.each do |key,value| 
-        if @@valid_paging_options.include?(key)
-          valid_options[key] = value
-        end
+      options.each do |key, value|
+        next unless @@valid_paging_options.include?(key)
+        valid_options[key] = value
       end
       valid_options
     end
-
   end
 end

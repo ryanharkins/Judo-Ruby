@@ -8,21 +8,22 @@ module Judopay
   module Connection
     private
 
-    def connection(raw=false)
+    def connection(raw = false)
+      format = Judopay.configuration.format
       options = {
         :headers => {
-          'Accept' => "application/#{Judopay.configuration.format}; charset=utf-8", 
+          'Accept' => "application/#{format}; charset=utf-8",
           'User-Agent' => Judopay.configuration.user_agent,
           'API-Version' => Judopay.configuration.api_version,
-          'Content-Type' => 'application/json'          
+          'Content-Type' => 'application/json'
         },
         :url => Judopay.configuration.endpoint_url
       }
-      
+
       connection = Faraday::Connection.new(options) do |faraday|
         faraday.adapter :httpclient
         faraday.use Faraday::Request::UrlEncoded
-        #faraday.use Faraday::Response::Logger
+        # faraday.use Faraday::Response::Logger
         faraday.use FaradayMiddleware::JudoMashify unless raw
         unless raw
           case Judopay.configuration.format.to_s
@@ -31,8 +32,11 @@ module Judopay
         end
         faraday.use FaradayMiddleware::RaiseHttpException
       end
-      
-      connection.basic_auth(Judopay.configuration.api_token, Judopay.configuration.api_secret)
+
+      connection.basic_auth(
+        Judopay.configuration.api_token,
+        Judopay.configuration.api_secret
+      )
       connection
     end
   end

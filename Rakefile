@@ -19,7 +19,7 @@ namespace :transactions do
   task :all do 
     configure
     
-    transactions = Judopay::Refund.all(
+    transactions = Judopay::Payment.all(
       :sort => 'time-ascending',
       :offset => 1,
       :page_size => 30
