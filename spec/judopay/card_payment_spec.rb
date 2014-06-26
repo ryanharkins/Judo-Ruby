@@ -49,4 +49,30 @@ describe Judopay::CardPayment do
         Judopay::CardPayment.new.create
       end).to raise_error(Judopay::BadRequest)    
   end
+
+  it "should use the configured Judo ID if one isn't provided in the payment request" do
+    
+    stub_post('/transactions/payments').
+      to_return(:status => 200,
+                :body => lambda { |request| fixture("card_payments/create.json") })
+
+    Judopay.configure do |config|
+      config.judo_id = '123-456'
+    end
+
+    payment = Judopay::CardPayment.new(
+      :your_consumer_reference => '123',
+      :your_payment_reference => '456',
+      :amount => 1.01,
+      :card_number => '4976000000003436',
+      :expiry_date => '12/15',
+      :cv2 => '452'
+    )
+
+    response = payment.create
+
+    expect(payment.valid?).to eq(true)
+    expect(payment.judo_id).to eq('123-456')
+  end
+
 end

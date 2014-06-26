@@ -32,9 +32,9 @@ module Judopay
 
     def create
       check_api_method_is_supported(__method__)
+      check_judo_id
       check_validation
       api = Judopay::API.new
-      self.judo_id = Judopay.configuration.judo_id if self.judo_id.nil?
       api.post(self.resource_path, self)
     end
 
@@ -49,6 +49,13 @@ module Judopay
     def check_api_method_is_supported(method)
       self.class.check_api_method_is_supported(method)
     end
+
+    def check_judo_id
+      # Use judo_id from config if it hasn't been explicitly set
+      if self.respond_to?('judo_id') && self.judo_id.nil?
+        self.judo_id = Judopay.configuration.judo_id
+      end
+    end      
 
     protected
     # Has the pre-validation found any problems?
