@@ -5,6 +5,6 @@ module Judopay
   # Inherit from TokenPayment - attributes are identical
   class TokenPreauth < TokenPayment
     @resource_path = 'transactions/preauths'
-    @valid_api_methods = [:create]    
-  end  
+    @valid_api_methods = [:create]
+  end
 end

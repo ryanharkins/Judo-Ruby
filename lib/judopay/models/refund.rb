@@ -11,6 +11,6 @@ module Judopay
 
     validates_presence_of :receipt_id,
                           :amount,
-                          :your_payment_reference    
-  end  
+                          :your_payment_reference
+  end
 end

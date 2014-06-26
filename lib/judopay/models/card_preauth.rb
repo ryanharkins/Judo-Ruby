@@ -7,6 +7,6 @@ module Judopay
   # Inherit from CardPayment - attributes are identical
   class CardPreauth < CardPayment
     @resource_path = 'transactions/preauths'
-    @valid_api_methods = [:create]    
-  end  
+    @valid_api_methods = [:create]
+  end
 end

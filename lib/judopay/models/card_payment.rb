@@ -7,7 +7,7 @@ module Judopay
   class CardPayment < Model
     @resource_path = 'transactions/payments'
     @valid_api_methods = [:create]
-    
+
     attribute :your_consumer_reference, String # required
     attribute :your_payment_reference, String # required
     attribute :your_payment_meta_data, Hash
@@ -33,7 +33,7 @@ module Judopay
       check_judo_id
       check_validation
       api = Judopay::API.new
-      api.post(self.resource_path + '/validate', self)
+      api.post(resource_path + '/validate', self)
     end
-  end  
+  end
 end
