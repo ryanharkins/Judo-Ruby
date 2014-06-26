@@ -50,4 +50,16 @@ describe Judopay::CardPayment do
     expect(payment.judo_id).to eq('123-456')
   end
 
+  it "should validate a new payment given valid card details" do
+    stub_post('/transactions/payments/validate').
+      to_return(:status => 200,
+                :body => lambda { |request| fixture("card_payments/validate.json") })
+
+    payment = build(:card_payment)
+    response = payment.validate
+
+    expect(response).to be_a(Hash)
+    expect(response.error_message).to include("good to go") # API could give a more helpful response here
+  end  
+
 end

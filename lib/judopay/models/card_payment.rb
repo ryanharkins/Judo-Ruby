@@ -28,5 +28,12 @@ module Judopay
                           :card_number,
                           :expiry_date,
                           :cv2
+
+    def validate
+      check_judo_id
+      check_validation
+      api = Judopay::API.new
+      api.post(self.resource_path + '/validate', self)
+    end
   end  
 end
