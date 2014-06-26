@@ -25,7 +25,6 @@ module Judopay
                           :judo_id,
                           :amount,
                           :consumer_token,
-                          :card_token,
-                          :cv2
+                          :card_token
   end  
 end
