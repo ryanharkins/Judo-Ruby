@@ -40,9 +40,8 @@ module Judopay
 
     def parse_body
       return unless @response.respond_to?('response_headers')
-      unless @response.response_headers.include?('Content-Type') && @response.response_headers['Content-Type'] == 'application/json'
-        return nil
-      end
+      return unless @response.response_headers.include?('Content-Type')
+      return unless @response.response_headers['Content-Type'].include?('application/json')
 
       ::JSON.parse(@response.body)
     end
