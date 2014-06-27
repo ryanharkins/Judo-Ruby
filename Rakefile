@@ -49,7 +49,7 @@ namespace :transactions do
 
     transaction = Judopay::CardPreauth.new(
       :your_consumer_reference => '123',
-      :your_payment_reference => '456',
+      #:your_payment_reference => '456',
       :judo_id => ENV['JUDO_ID'],
       :amount => 5.01,
       :card_number => '4976000000003436',

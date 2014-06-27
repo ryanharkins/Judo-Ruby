@@ -34,7 +34,7 @@ module Judopay
     def create
       check_api_method_is_supported(__method__)
       check_judo_id
-      check_validation
+      #check_validation
       api = Judopay::API.new
       api.post(resource_path, self)
     end
@@ -64,8 +64,7 @@ module Judopay
     # We check the basics have been completed to avoid round trip to API
     def check_validation
       unless valid?
-        error_summary = errors.full_messages.join('; ')
-        fail Judopay::BadRequest, 'Validation failed: ' + error_summary
+        fail Judopay::ValidationError, errors
       end
     end
 

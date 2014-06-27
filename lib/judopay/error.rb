@@ -3,14 +3,14 @@ require 'json'
 module Judopay
   # Custom error class for rescuing from all API errors
   class Error < StandardError
-    attr_accessor :response, :error_type, :model_errors, :message
+    attr_accessor :response, :error_type, :model_errors, :message, :parsed_body
 
     def initialize(response = nil)
       @response = response
 
       # If we got a JSON response body, set variables
-      return if parsed_body.nil?
-      
+      return if @parsed_body.nil?
+
       @message = body_attribute('errorMessage')
       @error_type = body_attribute('errorType').to_i
       @model_errors = body_attribute('modelErrors')
@@ -32,8 +32,13 @@ module Judopay
       @message || self.class.name
     end
 
-    # @todo Memoize the result of parsed_body
-    def parsed_body
+    def parsed_body 
+      @parsed_body ||= parse_body
+    end
+
+    protected
+
+    def parse_body
       return unless @response.respond_to?('response_headers')
       unless @response.response_headers.include?('Content-Type') && @response.response_headers['Content-Type'] == 'application/json'
         return nil
@@ -41,8 +46,6 @@ module Judopay
 
       ::JSON.parse(@response.body)
     end
-
-    protected
 
     def body_attribute(attribute)
       return nil if parsed_body.nil? || !parsed_body.include?(attribute)
@@ -73,4 +76,19 @@ module Judopay
 
   # Raised when API returns the HTTP status code 504
   class GatewayTimeout < Error; end
+
+  # A validation error that hasn't reached the API
+  class ValidationError < StandardError
+    attr_accessor :errors, :message
+
+    def initialize(errors)
+      @errors = errors
+      @message = 'Missing required fields'
+    end
+
+    # Provide a consistent interface
+    def model_errors
+      @errors.full_messages
+    end
+  end
 end

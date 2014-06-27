@@ -17,6 +17,6 @@ describe Judopay::TokenPayment do
   it "should return a bad request exception if basic validation fails" do
       expect(lambda do
         Judopay::TokenPayment.new.create
-      end).to raise_error(Judopay::BadRequest)    
+      end).to raise_error(Judopay::ValidationError)    
   end
 end

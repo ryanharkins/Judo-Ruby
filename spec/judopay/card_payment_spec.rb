@@ -30,7 +30,7 @@ describe Judopay::CardPayment do
   it "should return a bad request exception if basic validation fails" do
       expect(lambda do
         Judopay::CardPayment.new.create
-      end).to raise_error(Judopay::BadRequest)    
+      end).to raise_error(Judopay::ValidationError)    
   end
 
   it "should use the configured Judo ID if one isn't provided in the payment request" do
