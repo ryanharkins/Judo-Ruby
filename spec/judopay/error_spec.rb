@@ -17,4 +17,22 @@ describe Judopay::Error do
   it "contains exceptions in Judopay" do
     expect(Judopay::BadRequest.new).to be_a_kind_of(Judopay::Error)
   end
+
+  it "makes error information available on the exception object" do
+    stub_post('/transactions/payments').
+      to_return(:status => 400,
+                :body => lambda { |request| fixture("card_payments/create_bad_request.json") },
+                :headers => { 'Content-Type' => 'application/json' })
+
+    payment = build(:card_payment)
+    
+    begin
+      response = payment.create
+    rescue Judopay::BadRequest => e
+      expect(e.http_status).to eq(400)
+      expect(e.model_errors).to be_a_kind_of(Array)
+      expect(e.error_type).to eq(9)
+      expect(e.message).to eq('Please check the card token.') 
+    end
+  end
 end

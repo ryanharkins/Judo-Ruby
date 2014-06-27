@@ -34,22 +34,5 @@ module FaradayMiddleware
       @parser = nil
     end
 
-    private
-
-    def parsed_body(response)
-      if response.response_headers.include?('Content-Type') && response.response_headers['Content-Type'] == 'application/json'
-        ::JSON.parse(response.body)
-      else
-        nil
-      end
-    end
-
-    # If the response is in JSON format, extract the application error type from the response body
-    def application_error_type(response)
-      error_body = parsed_body(response)
-      return nil if error_body.nil || !error_body.include?('errorType')
-      error_body['errorType'].to_i
-    end
-
   end
 end

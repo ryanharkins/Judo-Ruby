@@ -1,32 +1,52 @@
+require 'json'
+
 module Judopay
   # Custom error class for rescuing from all API errors
   class Error < StandardError
-    attr_accessor :response
-    attr_writer   :message
+    attr_accessor :response, :error_type, :model_errors, :message
 
     def initialize(response = nil)
       @response = response
-      @message = nil
+
+      # If we got a JSON response body, set variables
+      return if parsed_body.nil?
+      
+      @message = body_attribute('errorMessage')
+      @error_type = body_attribute('errorType').to_i
+      @model_errors = body_attribute('modelErrors')
     end
 
     def http_status
-      @response.code.to_i if @response
+      @response.status.to_i if @response
     end
 
     def http_body
       @response.body if @response
     end
 
-    def inspect
-      "#{message}: #{http_body}"
-    end
-
     def to_s
-      inspect
+      @message
     end
 
     def message
       @message || self.class.name
+    end
+
+    # @todo Memoize the result of parsed_body
+    def parsed_body
+      return unless @response.respond_to?('response_headers')
+      unless @response.response_headers.include?('Content-Type') && @response.response_headers['Content-Type'] == 'application/json'
+        return nil
+      end
+
+      ::JSON.parse(@response.body)
+    end
+
+    protected
+
+    def body_attribute(attribute)
+      return nil if parsed_body.nil? || !parsed_body.include?(attribute)
+      parsed_body[attribute]
     end
   end
 
