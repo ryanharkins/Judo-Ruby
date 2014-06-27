@@ -9,7 +9,7 @@ module Judopay
       @response = response
 
       # If we got a JSON response body, set variables
-      return if @parsed_body.nil?
+      return if parsed_body.nil?
 
       @message = body_attribute('errorMessage')
       @error_type = body_attribute('errorType').to_i
