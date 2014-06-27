@@ -1,6 +1,34 @@
 module Judopay
   # Custom error class for rescuing from all API errors
-  class Error < StandardError; end
+  class Error < StandardError
+    attr_accessor :response
+    attr_writer   :message
+
+    def initialize(response = nil)
+      @response = response
+      @message = nil
+    end
+
+    def http_status
+      @response.code.to_i if @response
+    end
+
+    def http_body
+      @response.body if @response
+    end
+
+    def inspect
+      "#{message}: #{http_body}"
+    end
+
+    def to_s
+      inspect
+    end
+
+    def message
+      @message || self.class.name
+    end
+  end
 
   # Raised when API returns the HTTP status code 400
   class BadRequest < Error; end

@@ -9,22 +9,22 @@ module FaradayMiddleware
       @app.call(env).on_complete do |response|
         case response.status.to_i
         when 400
-          raise Judopay::BadRequest, error_message_400(response)
+          raise Judopay::BadRequest.new(response)
         when 401
         when 403
-          raise Judopay::NotAuthorized, error_message_500(response, 'Check your login credentials and permissions') # Improve this message
+          raise Judopay::NotAuthorized.new(response)
         when 404
-          raise Judopay::NotFound, error_message_400(response)
+          raise Judopay::NotFound.new(response)
         when 409
-          raise Judopay::Conflict, error_message_400(response)
+          raise Judopay::Conflict.new(response)
         when 500
-          raise Judopay::InternalServerError, error_message_500(response, "Something is technically wrong.")
+          raise Judopay::InternalServerError.new(response)
         when 502
-          raise Judopay::BadGateway, error_message_500(response, "The server returned an invalid or incomplete response.")
+          raise Judopay::BadGateway.new(response)
         when 503
-          raise Judopay::ServiceUnavailable, error_message_500(response, "Judopay is rate limiting your requests.")
+          raise Judopay::ServiceUnavailable.new(response)
         when 504
-          raise Judopay::GatewayTimeout, error_message_500(response, "504 Gateway Time-out")
+          raise Judopay::GatewayTimeout.new(response)
         end
       end
     end
@@ -35,14 +35,6 @@ module FaradayMiddleware
     end
 
     private
-
-    def error_message_400(response)
-      "#{response[:method].to_s.upcase} #{response[:url]}: #{response[:status]}#{response.body}"
-    end
-
-    def error_message_500(response, body=nil)
-      "#{response[:method].to_s.upcase} #{response[:url]}: #{[response[:status].to_s + ':', body].compact.join(' ')}"
-    end
 
     def parsed_body(response)
       if response.response_headers.include?('Content-Type') && response.response_headers['Content-Type'] == 'application/json'
