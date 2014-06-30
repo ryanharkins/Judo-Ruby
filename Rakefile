@@ -4,6 +4,8 @@ require 'faraday'
 require 'judopay'
 require 'json'
 require 'terminal-table'
+require 'logger'
+require_relative 'lib/judopay'
 require_relative 'lib/judopay/models/transaction'
 require_relative 'lib/judopay/models/card_payment'
 require_relative 'lib/judopay/models/card_preauth'
@@ -66,10 +68,19 @@ namespace :transactions do
     puts response.inspect
   end
 
+  task :log do
+    configure
+    Judopay.log(Logger::DEBUG, 'It has hit the fan')
+  end
+
   def configure
+    logger = Logger.new('log.txt')
+    logger.level = Logger::DEBUG
+
     Judopay.configure do |config|
       config.api_token = ENV['JUDO_TOKEN']
       config.api_secret = ENV['JUDO_SECRET']
+      config.logger = logger
       #config.endpoint_url = 'https://api-yourapihere-com-5oon7fxkyui4.runscope.net/path/'
     end
   end

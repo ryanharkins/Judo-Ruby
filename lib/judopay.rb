@@ -6,12 +6,21 @@ require_relative 'judopay/error'
 
 module Judopay
   class << self
-    attr_accessor :configuration, :logger
+    attr_accessor :configuration
+    attr_reader :logger
   end
 
   def self.configure
     self.configuration ||= Configuration.new
     yield(configuration) if block_given?
+  end
+
+  # Record a new log message if a logger is configured
+  def self.log(log_level, message)
+    logger = self.configuration.logger
+    return unless logger.is_a?(Logger)
+    logger.progname = 'judopay'
+    logger.add(log_level) { message }
   end
 
   class Configuration
@@ -21,7 +30,8 @@ module Judopay
                   :format, 
                   :endpoint_url,
                   :user_agent,
-                  :judo_id
+                  :judo_id,
+                  :logger
 
     def initialize
       # Set defaults
