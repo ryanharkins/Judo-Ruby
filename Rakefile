@@ -69,7 +69,7 @@ namespace :transactions do
       puts response.inspect
     rescue Exception => e
       puts e.inspect
-      puts e.model_errors.inspect
+      #puts e.model_errors.inspect
     end
   end
 

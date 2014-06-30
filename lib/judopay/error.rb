@@ -31,7 +31,14 @@ module Judopay
     end
 
     def to_s
-      @message
+      return @message if model_errors.nil?
+      
+      summary = []
+      model_errors.each do |key, value|
+        summary.push(value.join('; '))
+      end
+
+      @message + ' (' + summary.join('; ') + ')'
     end
 
     def message
@@ -61,6 +68,7 @@ module Judopay
     def process_api_model_errors(api_model_errors)
       @model_errors = {}
       api_model_errors.each do |api_model_error|
+        next unless api_model_error.is_a?(Hash)
         field_name = api_model_error['fieldName'].underscore.to_sym
         if @model_errors[field_name].nil?
           @model_errors[field_name] = []
@@ -101,6 +109,10 @@ module Judopay
     def initialize(errors)
       @errors = errors
       @message = 'Missing required fields'
+    end
+
+    def to_s
+      @message + ' (' + @errors.full_messages.join('; ') + ')'
     end
 
     def model_errors
