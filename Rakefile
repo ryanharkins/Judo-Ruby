@@ -50,8 +50,8 @@ namespace :transactions do
     )
 
     transaction = Judopay::CardPreauth.new(
-      :your_consumer_reference => '123',
-      :your_payment_reference => '456',
+      #:your_consumer_reference => '123',
+      #:your_payment_reference => '456',
       :judo_id => ENV['JUDO_ID'],
       :amount => 5.01,
       :card_number => '4976000000003436',
@@ -64,8 +64,13 @@ namespace :transactions do
       }
     )
 
-    response = transaction.create
-    puts response.inspect
+    begin
+      response = transaction.create
+      puts response.inspect
+    rescue Exception => e
+      puts e.inspect
+      puts e.model_errors.inspect
+    end
   end
 
   task :log do

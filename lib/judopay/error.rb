@@ -8,15 +8,18 @@ module Judopay
     def initialize(response = nil)
       @response = response
 
+      # Log the error
+      Judopay.log(Logger::ERROR, self.class.name + ' ' + @message.to_s)
+
       # If we got a JSON response body, set variables
       return if parsed_body.nil?
 
       @message = body_attribute('errorMessage')
       @error_type = body_attribute('errorType').to_i
-      @model_errors = body_attribute('modelErrors')
+      api_model_errors = body_attribute('modelErrors')
+      return if api_model_errors.nil?
 
-      # Log the error
-      Judopay.log(Logger::ERROR, self.class.name + ' ' + @message)
+      process_api_model_errors(api_model_errors)
     end
 
     def http_status
@@ -53,6 +56,18 @@ module Judopay
       return nil if parsed_body.nil? || !parsed_body.include?(attribute)
       parsed_body[attribute]
     end
+
+    # Turn API model errors into a more ActiveRecord-like format
+    def process_api_model_errors(api_model_errors)
+      @model_errors = {}
+      api_model_errors.each do |api_model_error|
+        field_name = api_model_error['fieldName'].underscore.to_sym
+        if @model_errors[field_name].nil?
+          @model_errors[field_name] = []
+        end
+        @model_errors[field_name].push(api_model_error['errorMessage'])
+      end
+    end      
   end
 
   # Raised when API returns the HTTP status code 400
@@ -88,9 +103,9 @@ module Judopay
       @message = 'Missing required fields'
     end
 
-    # Provide a consistent interface
     def model_errors
-      @errors.full_messages
+      return if @errors.nil?
+      @errors.messages
     end
   end
 end
