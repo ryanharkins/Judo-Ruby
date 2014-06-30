@@ -34,7 +34,7 @@ module Judopay
     def create
       check_api_method_is_supported(__method__)
       check_judo_id
-      check_validation
+      #check_validation
       api = Judopay::API.new
       api.post(resource_path, self)
     end

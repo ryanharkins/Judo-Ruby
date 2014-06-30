@@ -112,7 +112,12 @@ module Judopay
     end
 
     def to_s
-      @message + ' (' + @errors.full_messages.join('; ') + ')'
+      summary = []
+      model_errors.each do |key, value|
+        summary.push(key.to_s + ' ' + value.join('; '))
+      end
+
+      @message + ' (' + summary.join('; ') + ')'
     end
 
     def model_errors
