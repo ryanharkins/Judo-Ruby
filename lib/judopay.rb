@@ -6,7 +6,7 @@ require_relative 'judopay/error'
 
 module Judopay
   class << self
-    attr_accessor :configuration
+    attr_accessor :configuration, :logger
   end
 
   def self.configure
