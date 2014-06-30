@@ -14,6 +14,9 @@ module Judopay
       @message = body_attribute('errorMessage')
       @error_type = body_attribute('errorType').to_i
       @model_errors = body_attribute('modelErrors')
+
+      # Log the error
+      Judopay.log(Logger::ERROR, self.class.name + ' ' + @message)
     end
 
     def http_status

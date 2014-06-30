@@ -39,6 +39,7 @@ module Judopay
           end
         end
       end
+
       return response if raw
       Response.create(response.body)
     end

@@ -23,7 +23,7 @@ module Judopay
       connection = Faraday::Connection.new(options) do |faraday|
         faraday.adapter :httpclient
         faraday.use Faraday::Request::UrlEncoded
-        # faraday.use Faraday::Response::Logger
+        faraday.use Faraday::Response::Logger, Judopay.configuration.logger
         faraday.use FaradayMiddleware::JudoMashify unless raw
         unless raw
           case Judopay.configuration.format.to_s

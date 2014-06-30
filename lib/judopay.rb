@@ -3,11 +3,11 @@ require_relative 'judopay/api'
 require_relative 'judopay/response'
 require_relative 'judopay/serializer'
 require_relative 'judopay/error'
+require_relative 'judopay/null_logger'
 
 module Judopay
   class << self
     attr_accessor :configuration
-    attr_reader :logger
   end
 
   def self.configure
@@ -39,6 +39,7 @@ module Judopay
       @format = 'json'
       @endpoint_url = 'https://partnerapi.judopay-sandbox.com'
       @user_agent = 'Judopay Ruby SDK gem v' + Judopay::VERSION
+      @logger = Judopay::NullLogger.new
     end
   end
 end
