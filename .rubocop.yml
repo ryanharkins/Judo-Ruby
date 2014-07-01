@@ -79,7 +79,7 @@ Style/LineLength:
 # Offense count: 3
 # Configuration parameters: CountComments.
 Style/MethodLength:
-  Max: 26
+  Max: 32
 
 # Offense count: 2
 # Cop supports --auto-correct.

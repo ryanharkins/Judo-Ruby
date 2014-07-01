@@ -70,9 +70,7 @@ module Judopay
       api_model_errors.each do |api_model_error|
         next unless api_model_error.is_a?(Hash)
         field_name = api_model_error['fieldName'].underscore.to_sym
-        if @model_errors[field_name].nil?
-          @model_errors[field_name] = []
-        end
+        @model_errors[field_name] = [] if @model_errors[field_name].nil?
         @model_errors[field_name].push(api_model_error['errorMessage'])
       end
     end      

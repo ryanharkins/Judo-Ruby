@@ -63,9 +63,7 @@ module Judopay
     # Has the pre-validation found any problems?
     # We check the basics have been completed to avoid round trip to API
     def check_validation
-      unless valid?
-        fail Judopay::ValidationError, errors
-      end
+      fail Judopay::ValidationError, errors unless valid?
     end
 
     def self.check_api_method_is_supported(method)

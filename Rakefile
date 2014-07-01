@@ -67,7 +67,7 @@ namespace :transactions do
     begin
       response = transaction.create
       puts response.inspect
-    rescue Exception => e
+    rescue Judopay::ValidationError => e
       puts e.inspect
       puts e.model_errors.inspect
     end
