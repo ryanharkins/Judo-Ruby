@@ -1,5 +1,6 @@
 require 'faraday'
 require 'faraday_middleware'
+require 'openssl'
 require_relative '../faraday/raise_http_exception'
 require_relative '../faraday/judo_mashify'
 
@@ -17,7 +18,12 @@ module Judopay
           'API-Version' => Judopay.configuration.api_version,
           'Content-Type' => 'application/json'
         },
-        :url => Judopay.configuration.endpoint_url
+        :url => Judopay.configuration.endpoint_url,
+        :ssl => { 
+          :ca_file => File.dirname(File.dirname(__FILE__)) + '/certs/rapidssl_ca.crt',
+          :cert_store => false,
+          :verify => true
+        }
       }
 
       connection = Faraday::Connection.new(options) do |faraday|
