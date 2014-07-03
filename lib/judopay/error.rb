@@ -113,13 +113,17 @@ module Judopay
       @message = 'Missing required fields'
     end
 
-    def to_s
+    def message
       summary = []
       model_errors.each do |key, value|
         summary.push(key.to_s + ' ' + value.join('; '))
       end
 
       @message + ' (' + summary.join('; ') + ')'
+    end
+
+    def to_s 
+      @message
     end
 
     def model_errors
