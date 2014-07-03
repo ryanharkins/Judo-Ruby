@@ -11,6 +11,7 @@ require_relative 'lib/judopay/models/card_payment'
 require_relative 'lib/judopay/models/card_preauth'
 require_relative 'lib/judopay/models/preauth'
 require_relative 'lib/judopay/models/refund'
+require_relative 'lib/judopay/models/web_payments/payment'
 
 RSpec::Core::RakeTask.new
 
@@ -70,12 +71,23 @@ namespace :transactions do
     rescue Judopay::ValidationError => e
       puts e.inspect
       puts e.model_errors.inspect
+    rescue Judopay::BadRequest => e
+      puts e.inspect
+      puts e.model_errors.inspect  
     end
   end
 
   task :log do
     configure
-    Judopay.log(Logger::DEBUG, 'It has hit the fan')
+    Judopay.log(Logger::DEBUG, 'There was a problem')
+  end
+
+  namespace :web do
+    task :find do
+      configure
+      response = Judopay::WebPayments::Payment.find('4gcBAAMAGAASAAAADA66kRor6ofknGqU3A6i-759FprFGPH3ecVcW5ChMQK0f3pLBQ')
+      puts response.inspect
+    end
   end
 
   def configure
