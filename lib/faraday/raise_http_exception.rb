@@ -10,8 +10,7 @@ module FaradayMiddleware
         case response.status.to_i
         when 400
           raise Judopay::BadRequest, response
-        when 401
-        when 403
+        when 401, 403
           raise Judopay::NotAuthorized, response
         when 404
           raise Judopay::NotFound, response
