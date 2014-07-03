@@ -83,6 +83,29 @@ namespace :transactions do
   end
 
   namespace :web do
+    task :create do
+      configure
+      payment = Judopay::WebPayments::Payment.new(
+        :your_consumer_reference => '123',
+        :your_payment_reference => '456',
+        :judo_id => ENV['JUDO_ID'],
+        :amount => 1.01,
+        :client_ip_address => '127.0.0.1',
+        :client_user_agent => 'Mosaic 1.0',
+        :partner_service_fee => 0.10
+      )
+      #begin
+        response = payment.create
+        puts response.inspect
+      # rescue Judopay::ValidationError => e
+      #   puts e.inspect
+      #   puts e.model_errors.inspect
+      # rescue Judopay::BadRequest => e
+      #   puts e.inspect
+      #   puts e.model_errors.inspect  
+      # end
+    end
+
     task :find do
       configure
       response = Judopay::WebPayments::Payment.find('4gcBAAMAGAASAAAADA66kRor6ofknGqU3A6i-759FprFGPH3ecVcW5ChMQK0f3pLBQ')

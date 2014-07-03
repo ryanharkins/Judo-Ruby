@@ -1,4 +1,4 @@
-models = %w(card_payment card_preauth collection refund token_payment token_preauth)
+models = %w(card_payment card_preauth collection refund token_payment token_preauth web_payments/payment)
 models.each { |model| require_relative '../lib/judopay/models/' + model }
 
 FactoryGirl.define do
@@ -58,5 +58,15 @@ FactoryGirl.define do
   factory :token_preauth, :class => Judopay::TokenPreauth do
     valid_token_details
     valid_judo_id
-  end  
+  end
+
+  factory :web_payment, :class => Judopay::WebPayments::Payment do
+    valid_judo_id
+    amount 12.34
+    partner_service_fee 1.00
+    your_payment_reference '123'
+    your_consumer_reference '456'
+    client_ip_address '127.0.0.1'
+    client_user_agent 'Mozilla/5.0 (Windows NT 6.2; Win64; x64)...'
+  end
 end
