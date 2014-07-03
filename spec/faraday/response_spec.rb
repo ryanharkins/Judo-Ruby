@@ -4,6 +4,7 @@ describe Faraday::Response do
   Judopay.configure
   {
     400 => Judopay::BadRequest,
+    401 => Judopay::NotAuthorized,
     404 => Judopay::NotFound,
     409 => Judopay::Conflict,
     500 => Judopay::InternalServerError,
