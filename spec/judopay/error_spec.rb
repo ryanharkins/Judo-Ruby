@@ -8,14 +8,13 @@ describe Judopay::Error do
   end
 
   it "returns the 'message' that was set" do
-    e = Judopay::Error.new
     message = "An explicitly set message"
-    e.message = message
+    e = Judopay::Error.new(message)
     expect(e.message).to eq(message)
   end
 
   it "contains exceptions in Judopay" do
-    expect(Judopay::BadRequest.new).to be_a_kind_of(Judopay::Error)
+    expect(Judopay::BadRequest.new).to be_a_kind_of(Judopay::APIError)
   end
 
   it "makes error information available on the exception object for API errors" do

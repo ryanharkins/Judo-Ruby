@@ -1,8 +1,24 @@
 require 'json'
 
 module Judopay
-  # Custom error class for rescuing from all API errors
   class Error < StandardError
+    attr_writer :message
+
+    def initialize(message = nil)
+      @message = message
+    end
+    
+    def message
+      @message || self.class.name
+    end
+
+    def to_s 
+      @message
+    end
+  end
+
+  # Custom error class for rescuing from all API errors
+  class APIError < StandardError
     attr_accessor :response, :error_type, :model_errors, :message, :parsed_body
 
     def initialize(response = nil)
@@ -77,32 +93,32 @@ module Judopay
   end
 
   # Raised when API returns the HTTP status code 400
-  class BadRequest < Error; end
+  class BadRequest < APIError; end
 
   # Raised when API returns the HTTP status code 401/403
-  class NotAuthorized < Error
+  class NotAuthorized < APIError
     def message
       "Authorization has been denied for this request"
     end
   end
 
   # Raised when API returns the HTTP status code 404
-  class NotFound < Error; end
+  class NotFound < APIError; end
 
   # Raised when API returns the HTTP status code 409
-  class Conflict < Error; end
+  class Conflict < APIError; end
 
   # Raised when API returns the HTTP status code 500
-  class InternalServerError < Error; end
+  class InternalServerError < APIError; end
 
   # Raised when API returns the HTTP status code 502
-  class BadGateway < Error; end
+  class BadGateway < APIError; end
 
   # Raised when API returns the HTTP status code 503
-  class ServiceUnavailable < Error; end
+  class ServiceUnavailable < APIError; end
 
   # Raised when API returns the HTTP status code 504
-  class GatewayTimeout < Error; end
+  class GatewayTimeout < APIError; end
 
   # A validation error that hasn't reached the API
   class ValidationError < StandardError
@@ -110,16 +126,7 @@ module Judopay
 
     def initialize(errors)
       @errors = errors
-      @message = 'Missing required fields'
-    end
-
-    def message
-      summary = []
-      model_errors.each do |key, value|
-        summary.push(key.to_s + ' ' + value.join('; '))
-      end
-
-      @message + ' (' + summary.join('; ') + ')'
+      @message = 'Missing required fields' + model_errors_summary
     end
 
     def to_s 
@@ -129,6 +136,17 @@ module Judopay
     def model_errors
       return if @errors.nil?
       @errors.messages
+    end
+
+    protected
+
+    def model_errors_summary
+      summary = []
+      model_errors.each do |key, value|
+        summary.push(key.to_s + ' ' + value.join('; '))
+      end
+
+      ' (' + summary.join('; ') + ')'
     end
   end
 end

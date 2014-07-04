@@ -99,12 +99,9 @@ namespace :transactions do
       begin
         response = payment.create
         puts response.inspect
-      rescue Judopay::ValidationError => e
+      rescue Judopay::Error => e
         puts e.inspect
-        puts e.model_errors.inspect
-      rescue Judopay::BadRequest => e
-        puts e.inspect
-        puts e.model_errors.inspect  
+        puts e.model_errors.inspect if e.respond_to?('modeL_errors')
       end
     end
 
