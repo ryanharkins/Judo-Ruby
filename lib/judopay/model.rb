@@ -19,9 +19,9 @@ module Judopay
 
     # List all records
     #
-    # @param paging_options [Hash] Paging options (sort, offset and page_size)
+    # @param options [Hash] Paging options (sort, offset and page_size)
     # @return [Judopay::Mash] Mash of the API response   
-    def self.all(paging_options = {})
+    def self.all(options = {})
       check_api_method_is_supported(__method__)
       api = Judopay::API.new
       valid_options = self.valid_options(options).camel_case_keys!
@@ -83,14 +83,14 @@ module Judopay
     # We check the basics have been completed to avoid round trip to API
     #
     # @return nil
-    # @raise [ValidationError] if there are validation errors on the model   
+    # @raise [Judopay::ValidationError] if there are validation errors on the model   
     def check_validation
       fail Judopay::ValidationError, errors unless valid?
     end
 
     # Check if the specified API method is supported by the current model
     #
-    # @raise [ValidationError] if the API method is not supported
+    # @raise [Judopay::Error] if the API method is not supported
     def self.check_api_method_is_supported(method)
       if valid_api_methods.nil? || !valid_api_methods.include?(method.to_sym)
         fail Judopay::Error, 'API method not supported'
