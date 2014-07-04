@@ -44,7 +44,7 @@ describe Judopay::Error do
       response = payment.create
     rescue Judopay::ValidationError => e
       expect(e.model_errors).to be_a_kind_of(Hash)
-      expect(e.message).to eq('Missing required fields') 
+      expect(e.message).to include('Missing required fields') 
     end
   end  
 end
