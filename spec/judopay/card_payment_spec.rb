@@ -44,7 +44,7 @@ describe Judopay::CardPayment do
     end
 
     payment = build(:card_payment)
-    response = payment.create
+    payment.create
 
     expect(payment.valid?).to eq(true)
     expect(payment.judo_id).to eq('123-456')

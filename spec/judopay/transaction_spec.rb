@@ -41,7 +41,7 @@ describe Judopay::Transaction do
       :pageSize => 5
     }
 
-    transactions = Judopay::Transaction.all(options)
+    Judopay::Transaction.all(options)
 
     WebMock.should have_requested(
       :get, 

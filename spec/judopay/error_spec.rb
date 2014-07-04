@@ -26,7 +26,7 @@ describe Judopay::Error do
     payment = build(:card_payment)
     
     begin
-      response = payment.create
+      payment.create
     rescue Judopay::BadRequest => e
       expect(e.http_status).to eq(400)
       expect(e.model_errors).to be_a_kind_of(Hash)
@@ -40,7 +40,7 @@ describe Judopay::Error do
     payment = Judopay::CardPayment.new
     
     begin
-      response = payment.create
+      payment.create
     rescue Judopay::ValidationError => e
       expect(e.model_errors).to be_a_kind_of(Hash)
       expect(e.message).to include('Missing required fields') 
