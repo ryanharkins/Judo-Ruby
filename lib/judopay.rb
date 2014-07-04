@@ -13,6 +13,10 @@ module Judopay
   def self.configure
     self.configuration ||= Configuration.new
     yield(configuration) if block_given?
+
+    if self.configuration.use_production === true
+      self.configuration.endpoint_url = self.configuration.api_endpoints[:production]
+    end
   end
 
   # Record a new log message if a logger is configured
@@ -31,15 +35,23 @@ module Judopay
                   :endpoint_url,
                   :user_agent,
                   :judo_id,
-                  :logger
+                  :logger,
+                  :use_production
+
+    attr_reader   :api_endpoints
 
     def initialize
       # Set defaults
       @api_version = '4.0.0'
       @format = 'json'
-      @endpoint_url = 'https://partnerapi.judopay-sandbox.com'
+      @use_production = false
       @user_agent = 'Judopay Ruby SDK gem v' + Judopay::VERSION
       @logger = Judopay::NullLogger.new
+      @api_endpoints = {
+        :sandbox => 'https://partnerapi.judopay-sandbox.com',
+        :production => 'https://production.local'
+      }.freeze
+      @endpoint_url = @api_endpoints[:sandbox]
     end
   end
 end
