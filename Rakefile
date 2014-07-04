@@ -12,6 +12,7 @@ require_relative 'lib/judopay/models/card_preauth'
 require_relative 'lib/judopay/models/preauth'
 require_relative 'lib/judopay/models/refund'
 require_relative 'lib/judopay/models/web_payments/payment'
+require_relative 'lib/judopay/models/web_payments/preauth'
 
 RSpec::Core::RakeTask.new
 
@@ -85,25 +86,26 @@ namespace :transactions do
   namespace :web do
     task :create do
       configure
-      payment = Judopay::WebPayments::Payment.new(
+      payment = Judopay::WebPayments::Preauth.new(
         :your_consumer_reference => '123',
         :your_payment_reference => '456',
-        #:judo_id => ENV['JUDO_ID'],
+        :judo_id => ENV['JUDO_ID'],
         :amount => 1.01,
         :client_ip_address => '127.0.0.1',
         :client_user_agent => 'Mosaic 1.0',
         :partner_service_fee => 0.10
       )
-      #begin
+      
+      begin
         response = payment.create
         puts response.inspect
-      # rescue Judopay::ValidationError => e
-      #   puts e.inspect
-      #   puts e.model_errors.inspect
-      # rescue Judopay::BadRequest => e
-      #   puts e.inspect
-      #   puts e.model_errors.inspect  
-      # end
+      rescue Judopay::ValidationError => e
+        puts e.inspect
+        puts e.model_errors.inspect
+      rescue Judopay::BadRequest => e
+        puts e.inspect
+        puts e.model_errors.inspect  
+      end
     end
 
     task :find do

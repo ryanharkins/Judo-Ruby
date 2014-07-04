@@ -32,6 +32,11 @@ FactoryGirl.define do
     your_payment_reference 'payment12412312'
   end
 
+  trait :client_ip_address_and_user_agent do
+    client_ip_address '127.0.0.1'
+    client_user_agent 'Mozilla/5.0 (Windows NT 6.2; Win64; x64)...'
+  end
+
   factory :card_payment, :class => Judopay::CardPayment do
     valid_card_details
     valid_judo_id
@@ -66,7 +71,15 @@ FactoryGirl.define do
     partner_service_fee 1.00
     your_payment_reference '123'
     your_consumer_reference '456'
-    client_ip_address '127.0.0.1'
-    client_user_agent 'Mozilla/5.0 (Windows NT 6.2; Win64; x64)...'
+    client_ip_address_and_user_agent
   end
+
+  factory :web_preauth, :class => Judopay::WebPayments::Payment do
+    valid_judo_id
+    amount 12.34
+    partner_service_fee 1.00
+    your_payment_reference '123'
+    your_consumer_reference '456'
+    client_ip_address_and_user_agent
+  end  
 end
