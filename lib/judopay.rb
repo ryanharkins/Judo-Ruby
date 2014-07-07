@@ -16,6 +16,8 @@ module Judopay
 
     if self.configuration.use_production === true
       self.configuration.endpoint_url = self.configuration.api_endpoints[:production]
+    else
+      self.configuration.endpoint_url = self.configuration.api_endpoints[:sandbox]      
     end
   end
 
