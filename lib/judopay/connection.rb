@@ -39,10 +39,16 @@ module Judopay
         faraday.use FaradayMiddleware::RaiseHttpException
       end
 
-      connection.basic_auth(
-        Judopay.configuration.api_token,
-        Judopay.configuration.api_secret
-      )
+      # Authentication: OAuth2 or basic auth
+      unless Judopay.configuration.oauth_access_token.nil?
+        connection.request :oauth2, Judopay.configuration.oauth_access_token
+      else
+        connection.basic_auth(
+          Judopay.configuration.api_token,
+          Judopay.configuration.api_secret
+        )
+      end
+
       connection
     end
   end

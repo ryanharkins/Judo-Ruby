@@ -27,6 +27,7 @@ module Judopay
     attr_accessor :api_version, 
                   :api_token,
                   :api_secret,
+                  :oauth_access_token,
                   :format, 
                   :endpoint_url,
                   :user_agent,
