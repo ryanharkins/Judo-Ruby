@@ -13,12 +13,7 @@ module Judopay
   def self.configure
     self.configuration ||= Configuration.new
     yield(configuration) if block_given?
-
-    if self.configuration.use_production === true
-      self.configuration.endpoint_url = self.configuration.api_endpoints[:production]
-    else
-      self.configuration.endpoint_url = self.configuration.api_endpoints[:sandbox]      
-    end
+    self.configure_endpoint_for_environment
   end
 
   # Record a new log message if a logger is configured
@@ -27,6 +22,15 @@ module Judopay
     return unless logger.is_a?(Logger)
     logger.progname = 'judopay'
     logger.add(log_level) { message }
+  end
+
+  # Based on the use_production flag, which endpoint should we use?
+  def self.configure_endpoint_for_environment
+    if self.configuration.use_production === true
+      self.configuration.endpoint_url = self.configuration.api_endpoints[:production]
+    else
+      self.configuration.endpoint_url = self.configuration.api_endpoints[:sandbox]      
+    end
   end
 
   class Configuration
