@@ -7,7 +7,7 @@ require_relative 'error'
 module Judopay
   # Base model for Judopay API model objects
   class Model
-    include Virtus.model
+    send :include, Virtus.model
     include ActiveModel::Validations
     VALID_PAGING_OPTIONS = [:sort, :offset, :page_size]
 
