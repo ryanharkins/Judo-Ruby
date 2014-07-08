@@ -9,7 +9,7 @@ module Judopay
   class Model
     include Virtus.model
     include ActiveModel::Validations
-    @@valid_paging_options = [:sort, :offset, :page_size]
+    VALID_PAGING_OPTIONS = [:sort, :offset, :page_size]
 
     class << self
       @resource_path = nil
@@ -101,7 +101,7 @@ module Judopay
     def self.valid_options(options)
       valid_options = {}
       options.each do |key, value|
-        next unless @@valid_paging_options.include?(key)
+        next unless VALID_PAGING_OPTIONS.include?(key)
         valid_options[key] = value
       end
       valid_options
