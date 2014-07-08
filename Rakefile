@@ -51,7 +51,7 @@ namespace :transactions do
       :postcode => 'TR14 8PA'
     )
 
-    transaction = Judopay::CardPreauth.new(
+    transaction = Judopay::CardPayment.new(
       #:your_consumer_reference => '123',
       #:your_payment_reference => '456',
       :judo_id => ENV['JUDO_ID'],
