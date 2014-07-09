@@ -4,7 +4,7 @@ module Judopay
   module WebPayments
     class Payment < Model
       @resource_path = 'webpayments/payments'
-      @valid_api_methods = [:find, :create]
+      @valid_api_methods = [:create]
 
       attribute :judo_id, String
       attribute :amount, Float
@@ -19,15 +19,6 @@ module Judopay
                             :your_consumer_reference,
                             :your_payment_reference,
                             :amount
-
-      # Find a specific web payment given a valid payment reference
-      #
-      # @param reference [String] Payment reference
-      # @return [Judopay::Mash] Mash of the API response   
-      def self.find(reference)
-        api = Judopay::API.new
-        api.get('webpayments/' + reference.to_s)
-      end
     end
   end
 end

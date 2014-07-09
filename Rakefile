@@ -13,6 +13,7 @@ require_relative 'lib/judopay/models/preauth'
 require_relative 'lib/judopay/models/refund'
 require_relative 'lib/judopay/models/web_payments/payment'
 require_relative 'lib/judopay/models/web_payments/preauth'
+require_relative 'lib/judopay/models/web_payments/transaction'
 
 RSpec::Core::RakeTask.new
 
@@ -52,8 +53,8 @@ namespace :transactions do
     )
 
     transaction = Judopay::CardPayment.new(
-      #:your_consumer_reference => '123',
-      #:your_payment_reference => '456',
+      :your_consumer_reference => '123',
+      :your_payment_reference => '456',
       :judo_id => ENV['JUDO_ID'],
       :amount => 5.01,
       :card_number => '4976000000003436',
@@ -76,6 +77,13 @@ namespace :transactions do
       puts e.inspect
       puts e.model_errors.inspect  
     end
+  end
+
+  task :find do 
+    configure
+
+    response = Judopay::Payment.find('465906')
+
   end
 
   task :log do
@@ -107,7 +115,7 @@ namespace :transactions do
 
     task :find do
       configure
-      response = Judopay::WebPayments::Payment.find('3gcAAAcAAAADAAAADgAAADzZUfp-yHvi_odtZ6yiMCY6e4PRh9voAeYv-dfSdwwthlMc5Q')
+      response = Judopay::WebPayments::Transaction.find('3gcAAAcAAAADAAAADgAAADzZUfp-yHvi_odtZ6yiMCY6e4PRh9voAeYv-dfSdwwthlMc5Q')
       puts response.inspect
     end
   end
@@ -119,6 +127,7 @@ namespace :transactions do
     Judopay.configure do |config|
       config.api_token = ENV['JUDO_TOKEN']
       config.api_secret = ENV['JUDO_SECRET']
+      #config.oauth_access_token = ENV['JUDO_ACCESS_TOKEN']
       config.logger = logger
       #config.endpoint_url = 'https://api-yourapihere-com-5oon7fxkyui4.runscope.net/path/'
     end
