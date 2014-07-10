@@ -58,7 +58,7 @@ rescue Judopay::NotAuthorized => e
 rescue Judopay::NotFound => e
   # The resource was not found
 rescue Judopay::Conflict => e
-  # When does this happen?
+  # Rate limiting - you have made too many requests to the Judopay API
 rescue Judopay::Error => e
   # There was a problem connecting to the API
 rescue => e
