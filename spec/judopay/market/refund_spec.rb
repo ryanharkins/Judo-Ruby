@@ -11,4 +11,16 @@ describe Judopay::Market::Refund do
     expect(transactions).to be_a(Hash)
     expect(transactions.results[0].amount).to equal(1.01)
   end
+
+  it "should create a new refund given a valid payment reference" do
+    stub_post('/market/transactions/refunds').
+      to_return(:status => 200,
+                :body => lambda { |request| fixture("card_payments/create.json") })
+
+    refund = build(:market_refund)
+    response = refund.create
+
+    expect(response).to be_a(Hash)
+    expect(response.result).to eq("Success")
+  end  
 end
