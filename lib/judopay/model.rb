@@ -1,7 +1,7 @@
 require 'addressable/uri'
 require 'virtus'
 require 'active_model'
-require_relative '../patches/hash'
+require_relative 'core_ext/hash'
 require_relative 'error'
 
 module Judopay
