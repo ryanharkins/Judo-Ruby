@@ -125,9 +125,9 @@ namespace :transactions do
     logger.level = Logger::DEBUG
 
     Judopay.configure do |config|
-      config.api_token = ENV['JUDO_TOKEN']
-      config.api_secret = ENV['JUDO_SECRET']
-      #config.oauth_access_token = ENV['JUDO_ACCESS_TOKEN']
+      #config.api_token = ENV['JUDO_TOKEN']
+      #config.api_secret = ENV['JUDO_SECRET']
+      config.oauth_access_token = ENV['JUDO_ACCESS_TOKEN']
       config.logger = logger
       #config.endpoint_url = 'https://api-yourapihere-com-5oon7fxkyui4.runscope.net/path/'
     end

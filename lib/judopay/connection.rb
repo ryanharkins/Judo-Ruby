@@ -26,6 +26,12 @@ module Judopay
         }
       }
 
+      # Do we have an OAuth2 access token?
+      unless Judopay.configuration.oauth_access_token.nil?
+        options[:headers]['Authorization'] = 'Bearer ' + Judopay.configuration.oauth_access_token
+        Judopay.log(Logger::DEBUG, 'Using OAuth2 access token')
+      end
+
       connection = Faraday::Connection.new(options) do |faraday|
         faraday.adapter :httpclient
         faraday.use Faraday::Request::UrlEncoded
@@ -39,14 +45,13 @@ module Judopay
         faraday.use FaradayMiddleware::RaiseHttpException
       end
 
-      # Authentication: OAuth2 or basic auth
-      unless Judopay.configuration.oauth_access_token.nil?
-        connection.request :oauth2, Judopay.configuration.oauth_access_token
-      else
+      # Authentication with basic auth if there is no OAuth2 access token
+      if Judopay.configuration.oauth_access_token.nil?
         connection.basic_auth(
           Judopay.configuration.api_token,
           Judopay.configuration.api_secret
         )
+        Judopay.log(Logger::DEBUG, 'Using HTTP basic auth')
       end
 
       connection
