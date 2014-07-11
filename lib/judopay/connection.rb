@@ -10,14 +10,8 @@ module Judopay
     private
 
     def connection(raw = false)
-      format = Judopay.configuration.format
       options = {
-        :headers => {
-          'Accept' => "application/#{format}; charset=utf-8",
-          'User-Agent' => Judopay.configuration.user_agent,
-          'API-Version' => Judopay.configuration.api_version,
-          'Content-Type' => 'application/json'
-        },
+        :headers => request_headers,
         :url => Judopay.configuration.endpoint_url,
         :ssl => { 
           :ca_file => File.dirname(File.dirname(__FILE__)) + '/certs/rapidssl_ca.crt',
@@ -25,12 +19,6 @@ module Judopay
           :verify => true
         }
       }
-
-      # Do we have an OAuth2 access token?
-      unless Judopay.configuration.oauth_access_token.nil?
-        options[:headers]['Authorization'] = 'Bearer ' + Judopay.configuration.oauth_access_token
-        Judopay.log(Logger::DEBUG, 'Using OAuth2 access token')
-      end
 
       connection = Faraday::Connection.new(options) do |faraday|
         faraday.adapter :httpclient
@@ -55,6 +43,25 @@ module Judopay
       end
 
       connection
+    end
+
+    def request_headers
+      format = Judopay.configuration.format
+      
+      headers = {
+          'Accept' => "application/#{format}; charset=utf-8",
+          'User-Agent' => Judopay.configuration.user_agent,
+          'API-Version' => Judopay.configuration.api_version,
+          'Content-Type' => 'application/json'
+        }
+
+      # Do we have an OAuth2 access token?
+      unless Judopay.configuration.oauth_access_token.nil?
+        headers['Authorization'] = 'Bearer ' + Judopay.configuration.oauth_access_token
+        Judopay.log(Logger::DEBUG, 'Using OAuth2 access token')
+      end
+
+      headers
     end
   end
 end
