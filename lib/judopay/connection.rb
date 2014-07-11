@@ -13,7 +13,7 @@ module Judopay
       options = {
         :headers => request_headers,
         :url => Judopay.configuration.endpoint_url,
-        :ssl => { 
+        :ssl => {
           :ca_file => File.dirname(File.dirname(__FILE__)) + '/certs/rapidssl_ca.crt',
           :cert_store => false,
           :verify => true
@@ -47,13 +47,13 @@ module Judopay
 
     def request_headers
       format = Judopay.configuration.format
-      
+
       headers = {
-          'Accept' => "application/#{format}; charset=utf-8",
-          'User-Agent' => Judopay.configuration.user_agent,
-          'API-Version' => Judopay.configuration.api_version,
-          'Content-Type' => 'application/json'
-        }
+        'Accept' => "application/#{format}; charset=utf-8",
+        'User-Agent' => Judopay.configuration.user_agent,
+        'API-Version' => Judopay.configuration.api_version,
+        'Content-Type' => 'application/json'
+      }
 
       # Do we have an OAuth2 access token?
       unless Judopay.configuration.oauth_access_token.nil?

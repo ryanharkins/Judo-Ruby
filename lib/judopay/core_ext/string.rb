@@ -7,23 +7,23 @@ class String
   # @return [String] Receiver converted to camel case.
   def camel_case
     return self if self !~ /_/ && self =~ /[A-Z]+.*/
-    split('_').map{|e| e.capitalize}.join.uncapitalize
+    split('_').map { |e| e.capitalize }.join.uncapitalize
   end
 
-  def uncapitalize 
+  def uncapitalize
     self[0, 1].downcase + self[1..-1]
   end
 
   # Converts a camel_cased string to a underscored string
   # Replaces spaces with underscores, and strips whitespace
   def underscore
-    self.to_s.strip.
+    to_s.strip.
       gsub(' ', '_').
       gsub(/::/, '/').
-      gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-      gsub(/([a-z\d])([A-Z])/,'\1_\2').
-      tr("-", "_").
-      squeeze("_").
+      gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
+      gsub(/([a-z\d])([A-Z])/, '\1_\2').
+      tr('-', '_').
+      squeeze('_').
       downcase
-  end  
+  end
 end

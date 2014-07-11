@@ -7,12 +7,12 @@ module Judopay
     def initialize(message = nil)
       @message = message
     end
-    
+
     def message
       @message || self.class.name
     end
 
-    def to_s 
+    def to_s
       @message
     end
   end
@@ -48,9 +48,9 @@ module Judopay
 
     def to_s
       return @message if model_errors.nil?
-      
+
       summary = []
-      model_errors.each do |key, value|
+      model_errors.each do |_key, value|
         summary.push(value.join('; '))
       end
 
@@ -61,7 +61,7 @@ module Judopay
       @message || self.class.name
     end
 
-    def parsed_body 
+    def parsed_body
       @parsed_body ||= parse_body
     end
 
@@ -89,7 +89,7 @@ module Judopay
         @model_errors[field_name] = [] if @model_errors[field_name].nil?
         @model_errors[field_name].push(api_model_error['errorMessage'])
       end
-    end      
+    end
   end
 
   # Raised when API returns the HTTP status code 400
@@ -98,7 +98,7 @@ module Judopay
   # Raised when API returns the HTTP status code 401/403
   class NotAuthorized < APIError
     def message
-      "Authorization has been denied for this request"
+      'Authorization has been denied for this request'
     end
   end
 
@@ -129,7 +129,7 @@ module Judopay
       @message = 'Missing required fields' + model_errors_summary
     end
 
-    def to_s 
+    def to_s
       @message
     end
 

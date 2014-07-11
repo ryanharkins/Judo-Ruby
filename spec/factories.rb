@@ -1,18 +1,18 @@
 models = %w(
-  card_payment 
-  card_preauth 
-  collection 
-  refund 
-  token_payment 
-  token_preauth 
-  web_payments/payment 
+  card_payment
+  card_preauth
+  collection
+  refund
+  token_payment
+  token_preauth
+  web_payments/payment
   market/collection
   market/refund
 )
 models.each { |model| require_relative '../lib/judopay/models/' + model }
 
 FactoryGirl.define do
-  trait :valid_card_details do 
+  trait :valid_card_details do
     your_consumer_reference 123
     your_payment_reference 456
     judo_id '123-456'
@@ -22,7 +22,7 @@ FactoryGirl.define do
     cv2 452
   end
 
-  trait :valid_token_details do 
+  trait :valid_token_details do
     your_consumer_reference '123'
     your_payment_reference '456'
     judo_id '123-456'
@@ -32,7 +32,7 @@ FactoryGirl.define do
     cv2 '452'
   end
 
-  trait :valid_judo_id do 
+  trait :valid_judo_id do
     judo_id '123-456'
   end
 
@@ -99,5 +99,5 @@ FactoryGirl.define do
 
   factory :market_refund, :class => Judopay::Market::Refund do
     valid_collection_or_refund_details
-  end    
+  end
 end

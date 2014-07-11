@@ -2,10 +2,10 @@ require 'spec_helper'
 require_relative '../../../lib/judopay/models/market/transaction'
 
 describe Judopay::Market::Transaction do
-  it "should list all transactions" do
+  it 'should list all transactions' do
     stub_get('/market/transactions').
       to_return(:status => 200,
-                :body => lambda { |request| fixture("transactions/all.json") })
+                :body => lambda { |_request| fixture('transactions/all.json') })
 
     transactions = Judopay::Market::Transaction.all
     expect(transactions).to be_a(Hash)

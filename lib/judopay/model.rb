@@ -20,7 +20,7 @@ module Judopay
     # List all records
     #
     # @param options [Hash] Paging options (sort, offset and page_size)
-    # @return [Judopay::Mash] Mash of the API response   
+    # @return [Judopay::Mash] Mash of the API response
     def self.all(options = {})
       check_api_method_is_supported(__method__)
       api = Judopay::API.new
@@ -32,7 +32,7 @@ module Judopay
     # Retrieve a specific record
     #
     # @param receipt_id [Integer] Paging options (sort, offset and page_size)
-    # @return [Judopay::Mash] Mash of the API response   
+    # @return [Judopay::Mash] Mash of the API response
     def self.find(receipt_id)
       check_api_method_is_supported(__method__)
       api = Judopay::API.new
@@ -83,7 +83,7 @@ module Judopay
     # We check the basics have been completed to avoid round trip to API
     #
     # @return nil
-    # @raise [Judopay::ValidationError] if there are validation errors on the model   
+    # @raise [Judopay::ValidationError] if there are validation errors on the model
     def check_validation
       fail Judopay::ValidationError, errors unless valid?
     end

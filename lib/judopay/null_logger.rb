@@ -2,10 +2,10 @@ require 'logger'
 
 module Judopay
   class NullLogger < Logger
-    def initialize(*args)
+    def initialize(*)
     end
 
-    def add(*args, &block)
+    def add(*)
     end
   end
 end

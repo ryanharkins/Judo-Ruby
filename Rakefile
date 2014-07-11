@@ -20,10 +20,10 @@ RSpec::Core::RakeTask.new
 task :default => :spec
 task :test => :spec
 
-namespace :transactions do 
-  task :all do 
+namespace :transactions do
+  task :all do
     configure
-    
+
     transactions = Judopay::Payment.all(
       :sort => 'time-ascending',
       :offset => 1,
@@ -32,13 +32,13 @@ namespace :transactions do
 
     puts transactions.inspect
     puts transactions['resultCount'].to_s + " results\n"
-    
+
     transactions['results'].each do |result|
-      rows = []      
-      result.each do |key,value|
+      rows = []
+      result.each do |key, value|
         rows.push([key, value.inspect])
       end
-      
+
       puts Terminal::Table.new :rows => rows
     end
   end
@@ -75,15 +75,15 @@ namespace :transactions do
       puts e.model_errors.inspect
     rescue Judopay::BadRequest => e
       puts e.inspect
-      puts e.model_errors.inspect  
+      puts e.model_errors.inspect
     end
   end
 
-  task :find do 
+  task :find do
     configure
 
     response = Judopay::Payment.find('465906')
-
+    puts response.inspect
   end
 
   task :log do
@@ -103,7 +103,7 @@ namespace :transactions do
         :client_user_agent => 'Mosaic 1.0',
         :partner_service_fee => 0.10
       )
-      
+
       begin
         response = payment.create
         puts response.inspect
@@ -125,11 +125,11 @@ namespace :transactions do
     logger.level = Logger::DEBUG
 
     Judopay.configure do |config|
-      #config.api_token = ENV['JUDO_TOKEN']
-      #config.api_secret = ENV['JUDO_SECRET']
+      # config.api_token = ENV['JUDO_TOKEN']
+      # config.api_secret = ENV['JUDO_SECRET']
       config.oauth_access_token = ENV['JUDO_ACCESS_TOKEN']
       config.logger = logger
-      #config.endpoint_url = 'https://api-yourapihere-com-5oon7fxkyui4.runscope.net/path/'
+      # config.endpoint_url = 'https://api-yourapihere-com-5oon7fxkyui4.runscope.net/path/'
     end
   end
 end

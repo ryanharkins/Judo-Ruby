@@ -5,24 +5,9 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 18
-# Cop supports --auto-correct.
-Lint/UnusedBlockArgument:
-  Enabled: false
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Lint/UnusedMethodArgument:
-  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/BracesAroundHashParameters:
-  Enabled: false
-
-# Offense count: 1
-Style/ClassVars:
   Enabled: false
 
 # Offense count: 1
@@ -38,11 +23,6 @@ Style/Documentation:
 Style/DotPosition:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/EmptyLinesAroundBody:
-  Enabled: false
-
 # Offense count: 2
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
@@ -54,18 +34,8 @@ Style/GuardClause:
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
 
-# Offense count: 5
-# Cop supports --auto-correct.
-Style/IndentationWidth:
-  Enabled: false
-
 # Offense count: 18
 Style/Lambda:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/LeadingCommentSpace:
   Enabled: false
 
 # Offense count: 25
@@ -78,67 +48,5 @@ Style/MethodLength:
   Max: 32
 
 # Offense count: 2
-# Cop supports --auto-correct.
-Style/RedundantSelf:
-  Enabled: false
-
-# Offense count: 2
 Style/RegexpLiteral:
   MaxSlashes: 0
-
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/SignalException:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/SpaceAfterComma:
-  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/SpaceAroundEqualsInParameterDefault:
-  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/SpaceBeforeBlockBraces:
-  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SpaceBeforeComment:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
-Style/SpaceInsideBlockBraces:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces, SupportedStyles.
-Style/SpaceInsideHashLiteralBraces:
-  Enabled: false
-
-# Offense count: 51
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/StringLiterals:
-  Enabled: false
-
-# Offense count: 18
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/TrailingBlankLines:
-  Enabled: false
-
-# Offense count: 29
-# Cop supports --auto-correct.
-Style/TrailingWhitespace:
-  Enabled: false

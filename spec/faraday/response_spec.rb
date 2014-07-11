@@ -15,7 +15,7 @@ describe Faraday::Response do
       before do
         stub_get('/transactions').
           to_return(:status => status,
-                    :body => lambda { |request| JSON.generate({'errorType' => status}) },
+                    :body => lambda { |_request| JSON.generate('errorType' => status) },
                     :headers => { 'Content-Type' => 'application/json' })
       end
 
