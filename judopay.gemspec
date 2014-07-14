@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
+  spec.required_ruby_version = '>= 1.9.3'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
@@ -26,11 +27,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'factory_girl'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'webmock'
-  spec.add_dependency 'virtus'
-  spec.add_dependency 'httpclient'
-  spec.add_dependency 'activemodel'
-  spec.add_dependency 'faraday'
-  spec.add_dependency 'faraday_middleware'
-  spec.add_dependency 'rash'
-  spec.add_dependency 'addressable'
+  spec.add_dependency 'virtus', '=1.0.2'
+  spec.add_dependency 'httpclient', '=2.4.0'
+  spec.add_dependency 'activemodel', '=4.1.1'
+  spec.add_dependency 'faraday', '=0.9.0'
+  spec.add_dependency 'faraday_middleware', '=0.9.1'
+  spec.add_dependency 'rash', '=0.4.0'
+  spec.add_dependency 'addressable', '=2.3.6'
 end
