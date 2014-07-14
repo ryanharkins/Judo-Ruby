@@ -1,6 +1,7 @@
 require 'json'
 
 module Judopay
+  # Base error class
   class Error < StandardError
     attr_writer :message
 
