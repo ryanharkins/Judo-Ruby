@@ -1,29 +1,43 @@
 # Judopay
 
-TODO: Write a gem description
+The Judopay gem supports Ruby 1.9.3 and above (including 2.0.x and 2.1.x).
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'judopay'
+	gem 'judopay'
 
 And then execute:
 
-    $ bundle
+	$ bundle
 
 Or install it yourself as:
 
-    $ gem install judopay
+	$ gem install judopay
 
-## Usage
+## Configuration
 
-TODO: Write usage instructions here
+You configure the Judopay gem by passing a block. For example:
 
-## Contributing
+	Judopay.configure do |config|
+	  config.judo_id = 12345
+	end
 
-1. Fork it ( http://github.com/<my-github-username>/judopay/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+## Authentication
+You can authenticate either with basic authentication by passing your login and password credentials or using an existing OAuth2 access token.
+
+### Basic authentication
+
+	Judopay.configure do |config|
+	  config.judo_id = 12345
+	  config.api_token = 'your-token'
+	  config.api_secret = 'your-secret'
+	end
+
+### OAuth2 access token authentication
+
+	Judopay.configure do |config|
+	  config.judo_id = 12345
+	  config.oauth_access_token = 'your-oauth-token'
+	end

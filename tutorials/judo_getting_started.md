@@ -6,13 +6,17 @@
 
 The Judopay gem supports Ruby 1.9.3 and above (including 2.0.x and 2.1.x).
 
-Install the gem and its dependencies with:
+Add this line to your application's Gemfile:
 
-gem install judopay
+    gem 'judopay'
 
-If you're using Bundler, add it to your Gemfile and run 'bundle install'.
+And then execute:
 
-gem "judopay"
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install judopay
 
 ## Dependencies
 

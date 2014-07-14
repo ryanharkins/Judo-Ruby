@@ -10,6 +10,7 @@ module Judopay
     attr_accessor :configuration
   end
 
+  # Configure the gem by passing a block
   def self.configure
     self.configuration ||= Configuration.new
     yield(configuration) if block_given?
@@ -23,6 +24,8 @@ module Judopay
     logger.progname = 'judopay'
     logger.add(log_level) { message }
   end
+
+  protected
 
   # Based on the use_production flag, which endpoint should we use?
   def self.configure_endpoint_for_environment
@@ -47,8 +50,8 @@ module Judopay
 
     attr_reader :api_endpoints
 
+    # Set sensible configuration defaults
     def initialize
-      # Set defaults
       @api_version = '4.0.0'
       @format = 'json'
       @use_production = false
