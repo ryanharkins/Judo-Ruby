@@ -23,11 +23,6 @@ Style/Documentation:
 Style/DotPosition:
   Enabled: false
 
-# Offense count: 2
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Enabled: false
-
 # Offense count: 73
 # Cop supports --auto-correct.
 # Configuration parameters: SupportedStyles.

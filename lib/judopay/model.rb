@@ -72,9 +72,8 @@ module Judopay
 
     # Use judo_id from configuration if it hasn't been explicitly set
     def check_judo_id
-      if self.respond_to?('judo_id') && judo_id.nil?
-        self.judo_id = Judopay.configuration.judo_id
-      end
+      return unless self.respond_to?('judo_id') && judo_id.nil?
+      self.judo_id = Judopay.configuration.judo_id
     end
 
     protected
