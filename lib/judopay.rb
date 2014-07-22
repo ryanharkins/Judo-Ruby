@@ -59,7 +59,7 @@ module Judopay
       @logger = Judopay::NullLogger.new
       @api_endpoints = {
         :sandbox => 'https://partnerapi.judopay-sandbox.com',
-        :production => 'https://production.local'
+        :production => 'https://partnerapi.judopay.com'
       }.freeze
       @endpoint_url = @api_endpoints[:sandbox]
     end
