@@ -2,6 +2,8 @@
 
 The Judopay gem supports Ruby 1.9.3 and above (including 2.0.x and 2.1.x).
 
+[![Build Status](https://travis-ci.org/JudoPay/RubySdk.svg?branch=master)](https://travis-ci.org/JudoPay/RubySdk)
+
 ## Installation
 
 Add this line to your application's Gemfile:
