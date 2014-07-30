@@ -9,7 +9,7 @@ describe Judopay do
       config.use_production = true
     end
 
-    expect(Judopay.configuration.endpoint_url).to include('production')
+    expect(Judopay.configuration.endpoint_url).to_not include('sandbox')
 
     # Reset to sandbox for other tests
     Judopay.configure do |config|
