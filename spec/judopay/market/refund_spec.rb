@@ -9,7 +9,7 @@ describe Judopay::Market::Refund do
 
     transactions = Judopay::Market::Refund.all
     expect(transactions).to be_a(Hash)
-    expect(transactions.results[0].amount).to equal(1.01)
+    expect(transactions.results[0].amount).to eq(1.01)
   end
 
   it 'should create a new refund given a valid payment reference' do

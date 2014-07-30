@@ -9,7 +9,7 @@ describe Judopay::Transaction do
 
     transactions = Judopay::Transaction.all
     expect(transactions).to be_a(Hash)
-    expect(transactions.results[0].amount).to equal(1.01)
+    expect(transactions.results[0].amount).to eq(1.01)
   end
 
   it 'should give details of a single transaction given a valid receipt ID' do

@@ -9,6 +9,6 @@ describe Judopay::Market::Payment do
 
     transactions = Judopay::Market::Payment.all
     expect(transactions).to be_a(Hash)
-    expect(transactions.results[0].amount).to equal(1.01)
+    expect(transactions.results[0].amount).to eq(1.01)
   end
 end
