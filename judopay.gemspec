@@ -19,14 +19,14 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.required_ruby_version = '>= 1.9.3'
-  spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'yard'
   spec.add_development_dependency 'yard-xml'
   spec.add_development_dependency 'factory_girl'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'webmock'
+  spec.add_dependency 'bundler'
+  spec.add_dependency 'rake'
   spec.add_dependency 'virtus', '=1.0.2'
   spec.add_dependency 'httpclient', '=2.4.0'
   spec.add_dependency 'activemodel', '=4.1.1'
