@@ -1,4 +1,5 @@
 require_relative '../../model'
+require_relative 'webPaymentOperation'
 
 module Judopay
   module WebPayments
@@ -14,6 +15,7 @@ module Judopay
       attribute :your_payment_meta_data, Hash
       attribute :client_ip_address, String
       attribute :client_user_agent, String
+      attribute :web_payment_operation, Judopay::WebPayments::WebPaymentOperation
 
       validates_presence_of :judo_id,
                             :your_consumer_reference,
