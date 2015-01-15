@@ -35,6 +35,7 @@ You can authenticate either with basic authentication by passing your login and 
 	  config.judo_id = 12345
 	  config.api_token = 'your-token'
 	  config.api_secret = 'your-secret'
+	  config.use_production = false    # set to true on production, defaults to false which is the sandbox
 	end
 
 ### OAuth2 access token authentication
