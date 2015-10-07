@@ -14,7 +14,7 @@ module Judopay
         :headers => request_headers,
         :url => Judopay.configuration.endpoint_url,
         :ssl => {
-          :ca_file => File.dirname(File.dirname(__FILE__)) + '/certs/rapidssl_ca.crt',
+          :ca_file => File.dirname(File.dirname(__FILE__)) + '/certs/digicert_sha256_ca.pem',
           :cert_store => false,
           :verify => true
         }
