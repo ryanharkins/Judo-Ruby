@@ -50,6 +50,17 @@ module Judopay
       api.post(resource_path, self)
     end
 
+    # Validates a request
+    #
+    # @return [Judopay::Mash] Mash of the API response
+    def validate
+      check_api_method_is_supported(__method__)
+      check_judo_id
+      check_validation
+      api = Judopay::API.new
+      api.post(resource_path + '/validate', self)
+    end
+
     # Retrieve the current API resource path (e.g. /transactions/payments)
     #
     # @return [String] Resource path

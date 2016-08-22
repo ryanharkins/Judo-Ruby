@@ -6,7 +6,7 @@ require_relative 'consumer_location'
 module Judopay
   class CardPayment < Model
     @resource_path = 'transactions/payments'
-    @valid_api_methods = [:create]
+    @valid_api_methods = [:create, :validate]
 
     attribute :your_consumer_reference, String # required
     attribute :your_payment_reference, String # required
@@ -28,12 +28,5 @@ module Judopay
                           :card_number,
                           :expiry_date,
                           :cv2
-
-    def validate
-      check_judo_id
-      check_validation
-      api = Judopay::API.new
-      api.post(resource_path + '/validate', self)
-    end
   end
 end
