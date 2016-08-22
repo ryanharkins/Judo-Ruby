@@ -52,10 +52,10 @@ module Judopay
 
     # Set sensible configuration defaults
     def initialize
-      @api_version = '4.0.0'
+      @api_version = Judopay::API_VERSION
       @format = 'json'
       @use_production = false
-      @user_agent = 'Judopay Ruby SDK gem v' + Judopay::VERSION
+      @user_agent = "Judopay Ruby (#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}) SDK gem v#{Judopay::SDK_VERSION}"
       @logger = Judopay::NullLogger.new
       @api_endpoints = {
         :sandbox => 'https://partnerapi.judopay-sandbox.com',

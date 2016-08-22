@@ -31,7 +31,7 @@ module Judopay
 
     # Retrieve a specific record
     #
-    # @param receipt_id [Integer] Paging options (sort, offset and page_size)
+    # @param receipt_id [Integer] ID of particular transaction
     # @return [Judopay::Mash] Mash of the API response
     def self.find(receipt_id)
       check_api_method_is_supported(__method__)

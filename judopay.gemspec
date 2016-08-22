@@ -5,7 +5,7 @@ require 'judopay/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'judopay'
-  spec.version       = Judopay::VERSION
+  spec.version       = Judopay::SDK_VERSION
   spec.authors       = ['judoPay']
   spec.email         = ['developersupport@judopay.com']
   spec.summary       = 'Ruby SDK wrapper for the Judopay REST API'
@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 1.9.3'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'yard'
+  spec.add_development_dependency 'test-unit'
   spec.add_development_dependency 'yard-xml'
   spec.add_development_dependency 'factory_girl'
   spec.add_development_dependency 'rubocop'
