@@ -9,6 +9,7 @@ models = %w(
   market/collection
   market/refund
   save_card
+  register_card
 )
 models.each { |model| require_relative '../lib/judopay/models/' + model }
 
@@ -107,5 +108,10 @@ FactoryGirl.define do
     card_number '4976000000003436'
     expiry_date '12/20'
     cv2 452
+  end
+
+  factory :register_card, :class => Judopay::RegisterCard do
+    valid_card_details
+    valid_judo_id
   end
 end
