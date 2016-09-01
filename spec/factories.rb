@@ -10,6 +10,7 @@ models = %w(
   market/refund
   save_card
   register_card
+  void
 )
 models.each { |model| require_relative '../lib/judopay/models/' + model }
 
@@ -113,5 +114,9 @@ FactoryGirl.define do
   factory :register_card, :class => Judopay::RegisterCard do
     valid_card_details
     valid_judo_id
+  end
+
+  factory :void, :class => Judopay::Void do
+    valid_collection_or_refund_details
   end
 end
