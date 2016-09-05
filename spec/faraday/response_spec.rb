@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Faraday::Response do
-  Judopay.configure
   {
     400 => Judopay::BadRequest,
     401 => Judopay::NotAuthorized,
@@ -11,7 +10,6 @@ describe Faraday::Response do
     503 => Judopay::ServiceUnavailable
   }.each do |status, exception|
     context "when response status is #{status}" do
-
       before do
         stub_get('/transactions').
           to_return(:status => status,
