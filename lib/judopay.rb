@@ -58,10 +58,15 @@ module Judopay
       @user_agent = "Judopay Ruby (#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}) SDK gem v#{Judopay::SDK_VERSION}"
       @logger = Judopay::NullLogger.new
       @api_endpoints = {
-        :sandbox => 'https://partnerapi.judopay-sandbox.com',
-        :production => 'https://partnerapi.judopay.com'
+          :sandbox => 'https://partnerapi.judopay-sandbox.com',
+          :production => 'https://partnerapi.judopay.com'
       }.freeze
       @endpoint_url = @api_endpoints[:sandbox]
+    end
+
+    def validate
+      fail Judopay::ValidationError, 'SDK configuration variables missing' if self.judo_id.to_s.empty? || self.api_token.to_s.empty? || self.api_secret.to_s.empty?
+      true
     end
   end
 end

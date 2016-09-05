@@ -125,9 +125,10 @@ module Judopay
   class ValidationError < StandardError
     attr_accessor :errors, :message
 
-    def initialize(errors)
+    def initialize(message, errors = nil)
       @errors = errors
-      @message = 'Missing required fields' + model_errors_summary
+      @message = message
+      @message += model_errors_summary unless @errors.nil?
     end
 
     def to_s

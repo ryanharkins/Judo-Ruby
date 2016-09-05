@@ -95,7 +95,7 @@ module Judopay
     # @return nil
     # @raise [Judopay::ValidationError] if there are validation errors on the model
     def check_validation
-      fail Judopay::ValidationError, errors unless valid?
+      fail Judopay::ValidationError.new('Missing required fields', errors) unless valid?
     end
 
     # Check if the specified API method is supported by the current model
@@ -103,7 +103,7 @@ module Judopay
     # @raise [Judopay::Error] if the API method is not supported
     def self.check_api_method_is_supported(method)
       if valid_api_methods.nil? || !valid_api_methods.include?(method.to_sym)
-        fail Judopay::Error, 'API method not supported'
+        fail Judopay::ValidationError, 'API method not supported'
       end
     end
 
