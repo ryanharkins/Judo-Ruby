@@ -105,7 +105,7 @@ FactoryGirl.define do
   end
 
   factory :save_card, :class => Judopay::SaveCard do
-    your_consumer_reference 12345
+    your_consumer_reference 12_345
     card_number '4976000000003436'
     expiry_date '12/20'
     cv2 452

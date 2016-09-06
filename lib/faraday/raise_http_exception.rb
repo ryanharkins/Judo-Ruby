@@ -9,21 +9,21 @@ module FaradayMiddleware
       @app.call(env).on_complete do |response|
         case response.status.to_i
         when 400
-          fail Judopay::BadRequest, response
+          raise Judopay::BadRequest, response
         when 401, 403
-          fail Judopay::NotAuthorized, response
+          raise Judopay::NotAuthorized, response
         when 404
-          fail Judopay::NotFound, response
+          raise Judopay::NotFound, response
         when 409
-          fail Judopay::Conflict, response
+          raise Judopay::Conflict, response
         when 500
-          fail Judopay::InternalServerError, response
+          raise Judopay::InternalServerError, response
         when 502
-          fail Judopay::BadGateway, response
+          raise Judopay::BadGateway, response
         when 503
-          fail Judopay::ServiceUnavailable, response
+          raise Judopay::ServiceUnavailable, response
         when 504
-          fail Judopay::GatewayTimeout, response
+          raise Judopay::GatewayTimeout, response
         end
       end
     end

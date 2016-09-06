@@ -36,7 +36,6 @@ describe Judopay::Error do
   end
 
   it 'makes error information available on the exception object for validation errors' do
-
     payment = Judopay::CardPayment.new
 
     begin

@@ -9,34 +9,51 @@ module Judopay
   class Model
     send :include, Virtus.model
     include ActiveModel::Validations
-    VALID_PAGING_OPTIONS = [:sort, :offset, :page_size]
+    VALID_PAGING_OPTIONS = [:sort, :offset, :page_size].freeze
 
     class << self
       @resource_path = nil
       @valid_api_methods = []
       attr_accessor :resource_path, :valid_api_methods
-    end
 
-    # List all records
-    #
-    # @param options [Hash] Paging options (sort, offset and page_size)
-    # @return [Judopay::Mash] Mash of the API response
-    def self.all(options = {})
-      check_api_method_is_supported(__method__)
-      api = Judopay::API.new
-      valid_options = self.valid_options(options).camel_case_keys!
-      uri = resource_path + '?' + valid_options.to_query_string
-      api.get(uri)
-    end
+      # List all records
+      #
+      # @param options [Hash] Paging options (sort, offset and page_size)
+      # @return [Judopay::Mash] Mash of the API response
+      def all(options = {})
+        check_api_method_is_supported(__method__)
+        api = Judopay::API.new
+        valid_options = self.valid_options(options).camel_case_keys!
+        uri = resource_path + '?' + valid_options.to_query_string
+        api.get(uri)
+      end
 
-    # Retrieve a specific record
-    #
-    # @param receipt_id [Integer] ID of particular transaction
-    # @return [Judopay::Mash] Mash of the API response
-    def self.find(receipt_id)
-      check_api_method_is_supported(__method__)
-      api = Judopay::API.new
-      api.get(resource_path + receipt_id.to_i.to_s)
+      # Retrieve a specific record
+      #
+      # @param receipt_id [Integer] ID of particular transaction
+      # @return [Judopay::Mash] Mash of the API response
+      def find(receipt_id)
+        check_api_method_is_supported(__method__)
+        api = Judopay::API.new
+        api.get(resource_path + receipt_id.to_i.to_s)
+      end
+
+      # Check if the specified API method is supported by the current model
+      #
+      # @raise [Judopay::Error] if the API method is not supported
+      def check_api_method_is_supported(method)
+        raise Judopay::ValidationError, 'API method not supported' if valid_api_methods.nil? || !valid_api_methods.include?(method.to_sym)
+      end
+
+      # Take an paging options hash and filter all but the valid keys
+      def valid_options(options)
+        valid_options = {}
+        options.each do |key, value|
+          next unless VALID_PAGING_OPTIONS.include?(key)
+          valid_options[key] = value
+        end
+        valid_options
+      end
     end
 
     # Create a new record
@@ -83,7 +100,7 @@ module Judopay
 
     # Use judo_id from configuration if it hasn't been explicitly set
     def check_judo_id
-      return unless self.respond_to?('judo_id') && judo_id.nil?
+      return unless respond_to?('judo_id') && judo_id.nil?
       self.judo_id = Judopay.configuration.judo_id
     end
 
@@ -95,26 +112,7 @@ module Judopay
     # @return nil
     # @raise [Judopay::ValidationError] if there are validation errors on the model
     def check_validation
-      fail Judopay::ValidationError.new('Missing required fields', errors) unless valid?
-    end
-
-    # Check if the specified API method is supported by the current model
-    #
-    # @raise [Judopay::Error] if the API method is not supported
-    def self.check_api_method_is_supported(method)
-      if valid_api_methods.nil? || !valid_api_methods.include?(method.to_sym)
-        fail Judopay::ValidationError, 'API method not supported'
-      end
-    end
-
-    # Take an paging options hash and filter all but the valid keys
-    def self.valid_options(options)
-      valid_options = {}
-      options.each do |key, value|
-        next unless VALID_PAGING_OPTIONS.include?(key)
-        valid_options[key] = value
-      end
-      valid_options
+      raise Judopay::ValidationError.new('Missing required fields', errors) unless valid?
     end
   end
 end

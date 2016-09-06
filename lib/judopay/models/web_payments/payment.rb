@@ -1,5 +1,5 @@
 require_relative '../../model'
-require_relative 'webPaymentOperation'
+require_relative 'web_payment_operation'
 
 module Judopay
   module WebPayments

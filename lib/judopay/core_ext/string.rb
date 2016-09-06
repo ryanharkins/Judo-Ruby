@@ -4,7 +4,7 @@ class String
   #   "foo_bar".camel_case          #=> "fooBar"
   def camel_case
     return self if self !~ /_/ && self =~ /[A-Z]+.*/
-    split('_').map { |e| e.capitalize }.join.uncapitalize
+    split('_').map(&:capitalize).join.uncapitalize
   end
 
   # Convert first letter to lower case
@@ -19,8 +19,9 @@ class String
   #
   #   "BananaMan".underscore        #=> "banana_man"
   def underscore
-    to_s.strip
-      .gsub(' ', '_')
+    to_s
+      .strip
+      .tr(' ', '_')
       .gsub(/::/, '/')
       .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
       .gsub(/([a-z\d])([A-Z])/, '\1_\2')

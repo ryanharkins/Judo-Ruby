@@ -15,7 +15,7 @@ module Judopay
     attribute :amount, Float # required
     attribute :card_number, String # required for card transactions
     attribute :expiry_date, String # required for card transactions
-    attribute :cv2, String  # required for card transactions
+    attribute :cv2, String # required for card transactions
     attribute :card_address, Judopay::CardAddress
     attribute :consumer_location, Judopay::ConsumerLocation
     attribute :mobile_number, String
