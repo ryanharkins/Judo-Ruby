@@ -1,5 +1,12 @@
 {
-  "errorMessage": "Please check the card token.",
-  "errorType": "9",
-  "modelErrors": ["Something went pear-shaped"]
+  "details": [
+    {
+      "code": 46,
+      "fieldName": "ExpiryDate",
+      "message": "Sorry, but the expiry date entered is in the past. Please check your details and try again."
+    }
+  ],
+  "message": "Sorry, we're unable to process your request. Please check your details and try again.",
+  "code": 1,
+  "category": 2
 }
