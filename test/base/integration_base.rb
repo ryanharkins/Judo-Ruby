@@ -1,9 +1,9 @@
 require 'test/unit'
-require_relative '../lib/judopay'
-require_relative '../lib/judopay/error'
+require 'judopay'
+require 'judopay/error'
 require 'factory_girl'
-require_relative '../spec/factories'
-require 'helper/assertion_helper'
+require_relative '../../spec/factories'
+require_relative '../helper/assertion_helper'
 
 class IntegrationBase < Test::Unit::TestCase
   include FactoryGirl::Syntax::Methods

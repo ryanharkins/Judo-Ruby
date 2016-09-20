@@ -42,7 +42,7 @@ describe Judopay::CardPayment do
       config.judo_id = '123-456'
     end
 
-    payment = build(:card_payment)
+    payment = build(:card_payment, :judo_id => nil)
     payment.create
 
     expect(payment.valid?).to eq(true)

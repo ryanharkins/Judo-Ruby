@@ -1,4 +1,4 @@
-require 'integration_base'
+require 'base/integration_base'
 
 class AuthenticationTest < IntegrationBase
   def test_payment_with_invalid_judo_id
