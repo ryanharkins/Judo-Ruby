@@ -11,7 +11,9 @@ module Judopay
 
     def connection(raw = false)
       connection = Faraday::Connection.new(default_connection_options) do |faraday|
-        faraday.adapter :httpclient
+        # When adapter set to "httpclient" SSL error emerges after bunch of requests:
+        # "Faraday::SSLError: SSL_connect SYSCALL returned=5 errno=0 state=SSLv2/v3 read server hello A"
+        faraday.adapter :net_http
         faraday.use Faraday::Request::UrlEncoded
         faraday.use Faraday::Response::Logger, Judopay.configuration.logger
         define_format(faraday, raw)
