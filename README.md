@@ -26,6 +26,7 @@ To start using the gem, you need to pass block with your API credentials:
 	  config.judo_id = 'your-judo-id'
 	  config.api_token = 'your-token'
 	  config.api_secret = 'your-secret'
+	  config.use_production = false    # set to true on production, defaults to false which is the sandbox
 	end
 ```
 

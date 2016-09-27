@@ -56,8 +56,8 @@ module Judopay
       @user_agent = "Judopay Ruby (#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}) SDK gem v#{Judopay::SDK_VERSION}"
       @logger = Judopay::NullLogger.new
       @api_endpoints = {
-        :sandbox => 'https://partnerapi.judopay-sandbox.com',
-        :production => 'https://partnerapi.judopay.com'
+        :sandbox => 'https://gw1.judopay-sandbox.com',
+        :production => 'https://gw1.judopay.com'
       }.freeze
       @endpoint_url = @api_endpoints[:sandbox]
     end
