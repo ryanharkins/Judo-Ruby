@@ -19,6 +19,7 @@ module Judopay
     attribute :consumer_location, Judopay::ConsumerLocation
     attribute :mobile_number, String
     attribute :email_address, String
+    attribute :currency, String
 
     validates_presence_of :your_consumer_reference,
                           :your_payment_reference,

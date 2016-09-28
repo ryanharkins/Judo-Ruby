@@ -1,133 +1,91 @@
 require 'json'
 
 module Judopay
-  # Base error class
-  class Error < StandardError
-    attr_writer :message
+  # Single field error model
+  class FieldError
+    attr_accessor :message, :code, :field_name, :detail
 
-    def initialize(message = nil)
+    def initialize(message, code, field_name, detail)
+      @detail = detail
+      @field_name = field_name
+      @code = code
       @message = message
     end
 
-    def message
-      @message || self.class.name
-    end
-
     def to_s
-      @message
+      "Field \"#{@field_name}\" (code #{@code}): #{@message}"
     end
   end
 
   # Custom error class for rescuing from all API errors
   class APIError < StandardError
-    attr_accessor :response, :error_type, :model_errors, :message, :parsed_body
+    CATEGORY_UNKNOWN = 0
+    CATEGORY_REQUEST = 1
+    CATEGORY_MODEL = 2
+    CATEGORY_CONFIG = 3
+    CATEGORY_PROCESSING = 4
+    CATEGORY_EXCEPTION = 5
 
-    def initialize(response = nil)
-      @response = response
+    attr_accessor :message, :error_code, :status_code, :category, :field_errors
 
-      # Log the error
-      Judopay.log(Logger::ERROR, self.class.name + ' ' + @message.to_s)
+    class << self
+      def factory(response)
+        parsed_body = JSON.parse(response.body)
 
-      # If we got a JSON response body, set variables
-      return if parsed_body.nil?
+        new(
+          parsed_body['message'],
+          parsed_body['code'],
+          response.status.to_i,
+          parsed_body['category'],
+          extract_field_errors(parsed_body['details'])
+        )
+      end
 
-      @message = body_attribute('errorMessage')
-      @error_type = body_attribute('errorType').to_i
-      api_model_errors = body_attribute('modelErrors')
-      return if api_model_errors.nil?
+      protected
 
-      process_api_model_errors(api_model_errors)
+      def extract_field_errors(field_errors)
+        result = []
+
+        field_errors.to_a.each do |field_error|
+          result << FieldError.new(field_error['message'], field_error['code'], field_error['fieldName'], field_error['detail'])
+        end
+
+        result
+      end
     end
 
-    def http_status
-      @response.status.to_i if @response
-    end
-
-    def http_body
-      @response.body if @response
+    def initialize(message, error_code = 0, status_code = 0, category = CATEGORY_UNKNOWN, field_errors = [])
+      @message = message
+      @error_code = error_code
+      @status_code = status_code
+      @category = category
+      @field_errors = field_errors
     end
 
     def to_s
-      return @message if model_errors.nil?
-
-      summary = []
-      model_errors.each do |_key, value|
-        summary.push(value.join('; '))
-      end
-
-      @message + ' (' + summary.join('; ') + ')'
+      "JudoPay ApiException (status code #{@status_code}, error code #{@error_code}, category #{@category}) #{message}"
     end
 
     def message
-      @message || self.class.name
-    end
-
-    def parsed_body
-      @parsed_body ||= parse_body
+      (@message || self.class.name) + field_errors_message
     end
 
     protected
 
-    def parse_body
-      return unless @response.respond_to?('response_headers')
-      return unless @response.response_headers.include?('Content-Type')
-      return unless @response.response_headers['Content-Type'].include?('application/json')
-
-      ::JSON.parse(@response.body)
-    end
-
-    def body_attribute(attribute)
-      return nil if parsed_body.nil? || !parsed_body.include?(attribute)
-      parsed_body[attribute]
-    end
-
-    # Turn API model errors into a more ActiveRecord-like format
-    def process_api_model_errors(api_model_errors)
-      @model_errors = {}
-      api_model_errors.each do |api_model_error|
-        next unless api_model_error.is_a?(Hash)
-        field_name = api_model_error['fieldName'].underscore.to_sym
-        @model_errors[field_name] = [] if @model_errors[field_name].nil?
-        @model_errors[field_name].push(api_model_error['errorMessage'])
-      end
+    def field_errors_message
+      return '' if @field_errors.empty?
+      "\nFields errors:\n#{@field_errors.join("\n")}"
     end
   end
-
-  # Raised when API returns the HTTP status code 400
-  class BadRequest < APIError; end
-
-  # Raised when API returns the HTTP status code 401/403
-  class NotAuthorized < APIError
-    def message
-      'Authorization has been denied for this request'
-    end
-  end
-
-  # Raised when API returns the HTTP status code 404
-  class NotFound < APIError; end
-
-  # Raised when API returns the HTTP status code 409
-  class Conflict < APIError; end
-
-  # Raised when API returns the HTTP status code 500
-  class InternalServerError < APIError; end
-
-  # Raised when API returns the HTTP status code 502
-  class BadGateway < APIError; end
-
-  # Raised when API returns the HTTP status code 503
-  class ServiceUnavailable < APIError; end
-
-  # Raised when API returns the HTTP status code 504
-  class GatewayTimeout < APIError; end
 
   # A validation error that hasn't reached the API
   class ValidationError < StandardError
     attr_accessor :errors, :message
 
-    def initialize(errors)
+    def initialize(message, errors = nil)
       @errors = errors
-      @message = 'Missing required fields' + model_errors_summary
+      @message = message
+      @message += model_errors_summary unless @errors.nil?
     end
 
     def to_s
@@ -142,12 +100,12 @@ module Judopay
     protected
 
     def model_errors_summary
-      summary = []
+      summary = ["\nField errors:"]
       model_errors.each do |key, value|
-        summary.push(key.to_s + ' ' + value.join('; '))
+        summary.push("#{key}: #{value.join('; ')}")
       end
 
-      ' (' + summary.join('; ') + ')'
+      summary.join("\n")
     end
   end
 end

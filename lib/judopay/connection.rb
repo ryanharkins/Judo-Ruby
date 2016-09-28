@@ -10,31 +10,29 @@ module Judopay
     private
 
     def connection(raw = false)
-      options = {
-        :headers => request_headers,
-        :url => Judopay.configuration.endpoint_url,
-        :ssl => {
-          :ca_file => File.dirname(File.dirname(__FILE__)) + '/certs/digicert_sha256_ca.pem',
-          :cert_store => false,
-          :verify => true
-        }
-      }
-
-      connection = Faraday::Connection.new(options) do |faraday|
-        faraday.adapter :httpclient
+      connection = Faraday::Connection.new(default_connection_options) do |faraday|
+        # When adapter set to "httpclient" SSL error emerges after bunch of requests:
+        # "Faraday::SSLError: SSL_connect SYSCALL returned=5 errno=0 state=SSLv2/v3 read server hello A"
+        faraday.adapter :net_http
         faraday.use Faraday::Request::UrlEncoded
         faraday.use Faraday::Response::Logger, Judopay.configuration.logger
-        faraday.use FaradayMiddleware::JudoMashify unless raw
-        unless raw
-          case Judopay.configuration.format.to_s
-          when 'json' then faraday.use Faraday::Response::ParseJson
-          end
-        end
+        define_format(faraday, raw)
         faraday.use FaradayMiddleware::RaiseHttpException
       end
 
+      define_auth(connection)
+    end
+
+    def define_format(faraday, raw)
+      return if raw
+      faraday.use FaradayMiddleware::JudoMashify
+      faraday.use Faraday::Response::ParseJson if Judopay.configuration.format.to_s == 'json'
+    end
+
+    def define_auth(connection)
       # Authentication with basic auth if there is no OAuth2 access token
       if Judopay.configuration.oauth_access_token.nil?
+        Judopay.configuration.validate
         connection.basic_auth(
           Judopay.configuration.api_token,
           Judopay.configuration.api_secret
@@ -43,6 +41,18 @@ module Judopay
       end
 
       connection
+    end
+
+    def default_connection_options
+      {
+        :headers => request_headers,
+        :url => Judopay.configuration.endpoint_url,
+        :ssl => {
+          :ca_file => File.dirname(File.dirname(__FILE__)) + '/certs/rapidssl_ca.crt',
+          :cert_store => false,
+          :verify => true
+        }
+      }
     end
 
     def request_headers

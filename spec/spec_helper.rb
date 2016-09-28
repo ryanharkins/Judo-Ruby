@@ -17,8 +17,12 @@ RSpec.configure do |config|
   end
 end
 
-# Use Judopay default configuration
-Judopay.configure
+# Mock configuration
+Judopay.configure do |config|
+  config.judo_id = 'id'
+  config.api_token = 'token'
+  config.api_secret = 'secret'
+end
 
 def stub_get(path)
   stub_request(:get, /judopay/i)

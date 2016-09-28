@@ -15,7 +15,7 @@ module Judopay
     end
 
     # Perform an HTTP PUT request
-    def put(path, options = {},  raw = false)
+    def put(path, options = {}, raw = false)
       request(:put, path, options, raw)
     end
 

@@ -34,7 +34,6 @@ describe Judopay::CardPayment do
   end
 
   it "should use the configured Judo ID if one isn't provided in the payment request" do
-
     stub_post('/transactions/payments').
       to_return(:status => 200,
                 :body => lambda { |_request| fixture('card_payments/create.json') })
@@ -43,7 +42,7 @@ describe Judopay::CardPayment do
       config.judo_id = '123-456'
     end
 
-    payment = build(:card_payment)
+    payment = build(:card_payment, :judo_id => nil)
     payment.create
 
     expect(payment.valid?).to eq(true)

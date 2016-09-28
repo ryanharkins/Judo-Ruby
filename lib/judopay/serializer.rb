@@ -19,11 +19,7 @@ module Judopay
         next if value.nil?
 
         # Is this a Virtus model object that we need to hashify?
-        if value.class.included_modules.include?(Virtus::Model::Core)
-          output_hash[key] = hashify(value)
-        else
-          output_hash[key] = value
-        end
+        output_hash[key] = value.class.included_modules.include?(Virtus::Model::Core) ? hashify(value) : value
       end
       output_hash
     end

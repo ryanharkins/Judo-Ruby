@@ -1,17 +1,15 @@
 require 'spec_helper'
 
 describe Faraday::Response do
-  Judopay.configure
-  {
-    400 => Judopay::BadRequest,
-    401 => Judopay::NotAuthorized,
-    404 => Judopay::NotFound,
-    409 => Judopay::Conflict,
-    500 => Judopay::InternalServerError,
-    503 => Judopay::ServiceUnavailable
-  }.each do |status, exception|
+  [
+    400,
+    401,
+    404,
+    409,
+    500,
+    503
+  ].each do |status|
     context "when response status is #{status}" do
-
       before do
         stub_get('/transactions').
           to_return(:status => status,
@@ -19,10 +17,10 @@ describe Faraday::Response do
                     :headers => { 'Content-Type' => 'application/json' })
       end
 
-      it "should raise #{exception.name} error" do
+      it 'should raise APIError exception' do
         expect(lambda do
           Judopay::Transaction.all
-        end).to raise_error(exception)
+        end).to raise_error(Judopay::APIError)
       end
     end
   end

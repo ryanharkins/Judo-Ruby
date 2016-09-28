@@ -3,7 +3,7 @@ require_relative '../model'
 module Judopay
   class Refund < Model
     @resource_path = 'transactions/refunds'
-    @valid_api_methods = [:all, :create]
+    @valid_api_methods = [:all, :create, :validate]
 
     attribute :receipt_id, Integer
     attribute :amount, Float
