@@ -53,7 +53,9 @@ payment = Judopay::CardPayment.new(
   }
 )
 ```
-You can check on the required fields and the format of each field in the [Judopay REST API reference](https://www.judopay.com/docs/v5/api-reference/restful-api/#post-card-payment).
+**Note:** Please make sure that you are using a unique Consumer Reference for each different consumer, and a unique Payment Reference for each transaction.
+
+You can check on the required fields and the format of each field in the [Judopay REST API reference](https://www.judopay.com/docs/version-52/api/restful-api/#post-card-payment).
 
 To send the request to the API, call:
 ```ruby
