@@ -45,3 +45,7 @@ Style/MethodLength:
 # Offense count: 2
 Style/RegexpLiteral:
   MaxSlashes: 0
+  
+AllCops:
+  Exclude:
+    - 'judopay.gemspec'
