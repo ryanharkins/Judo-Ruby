@@ -1,7 +1,11 @@
 require 'hashie'
-require 'rash'
 
 module Judopay
-  class Mash < ::Hashie::Rash
+  class Mash < ::Hashie::Mash
+    protected
+
+    def convert_key(key)
+      key.to_s.underscore
+    end
   end
 end
