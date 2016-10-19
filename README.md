@@ -1,4 +1,4 @@
-# Judopay Ruby gem [![Build Status](https://travis-ci.org/JudoPay/RubySdk.svg?branch=master)](https://travis-ci.org/JudoPay/RubySdk)
+# Judopay Ruby gem [![Build Status](https://travis-ci.org/JudoPay/Judo-Ruby.svg?branch=master)](https://travis-ci.org/JudoPay/Judo-Ruby)
 The JudoPay gem provides you with ability to integrate card payments into your Ruby and Rails projects. Judo's SDK enables a faster, simpler and more secure payment experience within your app.
 ##### **\*\*\*Due to industry-wide security updates, versions below 2.0 of this SDK will no longer be supported after 1st Oct 2016. For more information regarding these updates, please read our blog [here](http://hub.judopay.com/pci31-security-updates/).*****
 
@@ -53,7 +53,9 @@ payment = Judopay::CardPayment.new(
   }
 )
 ```
-You can check on the required fields and the format of each field in the [Judopay REST API reference](https://www.judopay.com/docs/v5/api-reference/restful-api/#post-card-payment).
+**Note:** Please make sure that you are using a unique Consumer Reference for each different consumer, and a unique Payment Reference for each transaction.
+
+You can check on the required fields and the format of each field in the [Judopay REST API reference](https://www.judopay.com/docs/version-52/api/restful-api/#post-card-payment).
 
 To send the request to the API, call:
 ```ruby
