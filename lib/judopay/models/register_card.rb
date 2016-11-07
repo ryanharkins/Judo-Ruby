@@ -1,7 +1,6 @@
 require_relative '../model'
 require_relative 'payment'
 require_relative 'card_address'
-require_relative 'consumer_location'
 
 module Judopay
   class RegisterCard < Model
