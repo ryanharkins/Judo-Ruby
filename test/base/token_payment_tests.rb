@@ -88,4 +88,11 @@ module TokenPaymentTests
       get_model(:your_consumer_reference => nil, :cv2 => nil).create
     end
   end
+
+  def test_duplicate_payment
+    model = get_model
+    TestHelpers::AssertionHelper.assert_successful_payment(model.create)
+
+    TestHelpers::AssertionHelper.api_exception_with_errors(1, 86, 409, 4) { model.create }
+  end
 end
