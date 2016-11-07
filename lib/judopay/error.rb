@@ -46,8 +46,12 @@ module Judopay
       def extract_field_errors(field_errors)
         result = []
 
-        field_errors.to_a.each do |field_error|
-          result << FieldError.new(field_error['message'], field_error['code'], field_error['fieldName'], field_error['detail'])
+        if field_errors.is_a?(Hash) && field_errors.key?('receiptId')
+          result << 'Duplicate transaction. Receipt id: ' + field_errors['receiptId'].to_s
+        else
+          field_errors.to_a.each do |field_error|
+            result << FieldError.new(field_error['message'], field_error['code'], field_error['fieldName'], field_error['detail'])
+          end
         end
 
         result
