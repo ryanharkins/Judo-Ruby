@@ -11,6 +11,7 @@ models = %w(
   save_card
   register_card
   void
+  apple_payment
 )
 models.each { |model| require_relative '../lib/judopay/models/' + model }
 require 'securerandom'
@@ -149,5 +150,39 @@ FactoryGirl.define do
 
   factory :void, :class => Judopay::Void do
     valid_collection_or_refund_details
+  end
+
+  factory :apple_payment, :class => Judopay::ApplePayment do
+    payment_details
+    valid_judo_id
+    currency 'GBP'
+
+    client_details do
+      {
+        :key => 'someValidKey',
+        :value => 'someValidValue'
+      }
+    end
+
+    pk_payment do
+      {
+        :token => {
+          :payment_instrument_name => 'Visa 9911',
+          :payment_network => 'Visa',
+          :payment_data => {
+            :version => 'EC_v1',
+            :data => 'someData',
+            :signature => 'someData',
+            :header => {
+              :ephemeralPublicKey => 'someData',
+              :publicKeyHash => 'someData',
+              :transactionId => 'someData'
+            }
+          }
+        },
+        :billing_address => nil,
+        :shipping_address => nil
+      }
+    end
   end
 end
