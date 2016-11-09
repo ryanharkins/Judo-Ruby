@@ -16,6 +16,7 @@ module Judopay
       attribute :client_ip_address, String
       attribute :client_user_agent, String
       attribute :currency, String
+      attribute :client_details, Hash
       attribute :web_payment_operation, Judopay::WebPayments::WebPaymentOperation
 
       validates_presence_of :judo_id,

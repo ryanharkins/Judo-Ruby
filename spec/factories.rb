@@ -11,13 +11,17 @@ models = %w(
   save_card
   register_card
   void
+  apple_payment
 )
 models.each { |model| require_relative '../lib/judopay/models/' + model }
+require 'securerandom'
 
 FactoryGirl.define do
   trait :payment_details do
     your_consumer_reference 123
-    your_payment_reference 456
+    sequence :your_payment_reference do |n|
+      SecureRandom.hex(21) + n.to_s
+    end
     amount 1.01
   end
 
@@ -46,7 +50,9 @@ FactoryGirl.define do
   trait :valid_collection_or_refund_details do
     receipt_id '1234'
     amount 1.01
-    your_payment_reference 'payment12412312'
+    sequence :your_payment_reference do |n|
+      SecureRandom.hex(21) + n.to_s
+    end
   end
 
   trait :client_ip_address_and_user_agent do
@@ -144,5 +150,39 @@ FactoryGirl.define do
 
   factory :void, :class => Judopay::Void do
     valid_collection_or_refund_details
+  end
+
+  factory :apple_payment, :class => Judopay::ApplePayment do
+    payment_details
+    valid_judo_id
+    currency 'GBP'
+
+    client_details do
+      {
+        :key => 'someValidKey',
+        :value => 'someValidValue'
+      }
+    end
+
+    pk_payment do
+      {
+        :token => {
+          :payment_instrument_name => 'Visa 9911',
+          :payment_network => 'Visa',
+          :payment_data => {
+            :version => 'EC_v1',
+            :data => 'someData',
+            :signature => 'someData',
+            :header => {
+              :ephemeralPublicKey => 'someData',
+              :publicKeyHash => 'someData',
+              :transactionId => 'someData'
+            }
+          }
+        },
+        :billing_address => nil,
+        :shipping_address => nil
+      }
+    end
   end
 end

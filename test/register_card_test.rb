@@ -19,6 +19,12 @@ class RegisterCardTest < IntegrationBase
     assert_equal('1.01', result['amount'])
   end
 
+  def test_payment_without_currency
+    result = get_model(:currency => nil).create
+
+    TestHelpers::AssertionHelper.assert_successful_payment(result)
+  end
+
   def test_payment_with_negative_amount
     # Unneeded test
     assert_true(true)
@@ -29,9 +35,8 @@ class RegisterCardTest < IntegrationBase
     assert_true(true)
   end
 
-  def test_payment_without_currency
-    result = get_model(:currency => nil).create
-
-    TestHelpers::AssertionHelper.assert_successful_payment(result)
+  def test_duplicate_payment
+    # Unneeded test
+    assert_true(true)
   end
 end
