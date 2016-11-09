@@ -1,5 +1,4 @@
 require_relative '../model'
-require_relative 'payment'
 require_relative 'inner/pk_payment'
 
 module Judopay
@@ -20,8 +19,7 @@ module Judopay
                           :your_payment_reference,
                           :judo_id,
                           :amount,
-                          :currency,
-                          :pk_payment
+                          :currency
 
     validate_nested_model :pk_payment
   end
