@@ -1,8 +1,8 @@
 require_relative '../model'
-require_relative 'inner/pk_payment'
+require_relative 'inner/wallet'
 
 module Judopay
-  class ApplePayment < Model
+  class AndroidPayment < Model
     @resource_path = 'transactions/payments'
     @valid_api_methods = [:create]
 
@@ -13,7 +13,7 @@ module Judopay
     attribute :amount, Float # required
     attribute :currency, String
     attribute :client_details, Hash
-    attribute :pk_payment, Judopay::PkPayment
+    attribute :wallet, Judopay::Wallet
 
     validates_presence_of :your_consumer_reference,
                           :your_payment_reference,
@@ -21,6 +21,6 @@ module Judopay
                           :amount,
                           :currency
 
-    validate_nested_model :pk_payment
+    validate_nested_model :wallet
   end
 end

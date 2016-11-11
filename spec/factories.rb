@@ -12,6 +12,7 @@ models = %w(
   register_card
   void
   apple_payment
+  android_payment
 )
 models.each { |model| require_relative '../lib/judopay/models/' + model }
 require 'securerandom'
@@ -182,6 +183,25 @@ FactoryGirl.define do
         },
         :billing_address => nil,
         :shipping_address => nil
+      }
+    end
+  end
+  factory :android_payment, :class => Judopay::AndroidPayment do
+    payment_details
+    valid_judo_id
+    currency 'GBP'
+
+    wallet do
+      {
+        :encrypted_message => 'ZW5jcnlwdGVkTWVzc2FnZQ==',
+        :environment => 3,
+        :ephemeral_public_key => 'ZXBoZW1lcmFsUHVibGljS2V5',
+        :google_transaction_id => '123456789',
+        :instrument_details => '1234',
+        :instrument_type => 'VISA',
+        :public_key => 'someKey',
+        :tag => 'c2lnbmF0dXJl',
+        :version => 1
       }
     end
   end
