@@ -24,6 +24,7 @@ class VoidTest < IntegrationBase
     response = void.create
 
     TestHelpers::AssertionHelper.assert_successful_payment(response)
+    void.your_payment_reference = SecureRandom.hex(18) + Time.now.to_i.to_s
     TestHelpers::AssertionHelper.api_exception_with_errors(0, 51) { void.create }
   end
 
