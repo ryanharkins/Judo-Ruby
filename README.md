@@ -22,6 +22,7 @@ Or install it yourself as:
 ##### 2. Setup
 To start using the gem, you need to pass block with your API credentials:
 ```ruby
+require 'judopay'
 Judopay.configure do |config|
 	config.judo_id = '<JUDO_ID>'
 	config.api_token = '<TOKEN>'
@@ -31,6 +32,10 @@ end
 ```
 
 ##### 3. Make a payment
+Add model inclusion to your source code:
+```ruby
+require 'judopay/models/card_payment'
+```
 To make a new payment with full card details:
 ```ruby
 payment = Judopay::CardPayment.new(
