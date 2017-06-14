@@ -36,6 +36,8 @@ Add model inclusion to your source code:
 ```ruby
 require 'judopay/models/card_payment'
 ```
+**Note:** by default we only include the minimum models in order to keep memory footprint down. You will need to include it explicitly when using each type of payment model as defined in the wiki.
+
 To make a new payment with full card details:
 ```ruby
 payment = Judopay::CardPayment.new(
