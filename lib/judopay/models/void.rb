@@ -3,7 +3,7 @@ require_relative '../model'
 module Judopay
   class Void < Model
     @resource_path = 'transactions/voids'
-    @valid_api_methods = [:create, :validate]
+    @valid_api_methods = [:create]
 
     attribute :judo_id, String
     attribute :receipt_id, Integer

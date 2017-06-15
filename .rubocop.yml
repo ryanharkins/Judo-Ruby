@@ -11,7 +11,7 @@ Lint/UnusedMethodArgument:
   Enabled: false
 
 # Offense count: 1
-Style/CyclomaticComplexity:
+Metrics/CyclomaticComplexity:
   Max: 10
 
 # Offense count: 15
@@ -33,19 +33,22 @@ Style/HashSyntax:
 Style/Lambda:
   Enabled: false
 
+Style/SymbolArray:
+  Enabled: false
+
 # Offense count: 25
-Style/LineLength:
+Metrics/LineLength:
   Max: 138
 
 # Offense count: 3
 # Configuration parameters: CountComments.
-Style/MethodLength:
-  Max: 32
+Metrics/MethodLength:
+  Max: 80
 
-# Offense count: 2
-Style/RegexpLiteral:
-  MaxSlashes: 0
+Metrics/BlockLength:
+  Max: 65
   
 AllCops:
   Exclude:
     - 'judopay.gemspec'
+    - 'spec/factories.rb'

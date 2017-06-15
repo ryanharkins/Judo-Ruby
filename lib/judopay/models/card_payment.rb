@@ -5,7 +5,7 @@ require_relative 'card_address'
 module Judopay
   class CardPayment < Model
     @resource_path = 'transactions/payments'
-    @valid_api_methods = [:create, :validate]
+    @valid_api_methods = [:create]
 
     attribute :your_consumer_reference, String # required
     attribute :your_payment_reference, String # required
