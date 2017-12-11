@@ -26,7 +26,9 @@ module Judopay
     CATEGORY_PROCESSING = 4
     CATEGORY_EXCEPTION = 5
 
-    attr_accessor :message, :error_code, :status_code, :category, :field_errors
+    attr_accessor :error_code, :status_code, :category, :field_errors
+
+    attr_writer :message
 
     class << self
       def factory(response)

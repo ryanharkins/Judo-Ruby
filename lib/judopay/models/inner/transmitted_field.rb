@@ -27,7 +27,7 @@ module Judopay
 
       def parse_string(string)
         JSON.parse(string)
-      rescue
+      rescue StandardError
         raise Judopay::ValidationError, format(WRONG_JSON_ERROR_MESSAGE, name)
       end
     end

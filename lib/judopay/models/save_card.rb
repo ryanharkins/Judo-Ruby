@@ -19,7 +19,6 @@ module Judopay
 
     validates_presence_of :your_consumer_reference,
                           :card_number,
-                          :expiry_date,
-                          :cv2
+                          :expiry_date
   end
 end
