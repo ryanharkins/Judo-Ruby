@@ -1,9 +1,9 @@
 # Judopay Ruby gem [![Build Status](https://travis-ci.org/Judopay/Judo-Ruby.svg?branch=master)](https://travis-ci.org/Judopay/Judo-Ruby)
 The JudoPay gem provides you with ability to integrate card payments into your Ruby and Rails projects. Judo's SDK enables a faster, simpler and more secure payment experience within your app.
-##### **\*\*\*Due to industry-wide security updates, versions below 2.0 of this SDK will no longer be supported after 1st Oct 2016. For more information regarding these updates, please read our blog [here](http://hub.judopay.com/pci31-security-updates/).*****
+
 
 ## Requirements
-The Judopay gem supports Ruby 1.9.3 and above (including 2.0.x and 2.1.x).
+The Judopay gem supports Ruby 1.9.3 and above (including 2.x).
 
 ## Getting started
 ##### 1. Integration
