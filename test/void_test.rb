@@ -1,4 +1,4 @@
-require 'base/integration_base'
+require_relative 'base/integration_base'
 
 class VoidTest < IntegrationBase
   def test_valid_preauth_void
