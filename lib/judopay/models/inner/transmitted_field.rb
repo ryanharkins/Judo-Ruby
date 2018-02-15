@@ -4,8 +4,8 @@ require 'json'
 
 module Judopay
   class TransmittedField < Model
-    WRONG_OBJECT_ERROR_MESSAGE = 'You passed wrong value to the %s. Please pass Hash or json-encoded string'.freeze
-    WRONG_JSON_ERROR_MESSAGE = 'Can\'t decode %s object from JSON'.freeze
+    WRONG_OBJECT_ERROR_MESSAGE = 'You passed wrong value to the %<thing>s. Please pass Hash or json-encoded string'.freeze
+    WRONG_JSON_ERROR_MESSAGE = 'Can\'t decode %<thing>s object from JSON'.freeze
 
     class << self
       attr_accessor :field_name

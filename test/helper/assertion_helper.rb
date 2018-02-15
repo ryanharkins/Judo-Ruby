@@ -1,8 +1,10 @@
 require 'judopay/error'
 require 'test/unit/assertions'
 
-include Test::Unit::Assertions
 module TestHelpers
+
+  include Test::Unit::Assertions
+
   class AssertionHelper
     class << self
       def api_exception_with_errors(errors_cnt_expected, error_code, status_code = 400, error_category = 2)
