@@ -31,8 +31,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'virtus', '~> 1.0.2'
   spec.add_dependency 'httpclient', '~> 2.4.0'
   spec.add_dependency 'activemodel', ['~> 4.1', '~> 4.2']
-  spec.add_dependency 'faraday', '~> 0.14'
-  spec.add_dependency 'faraday_middleware', '~> 0.12'
+  spec.add_dependency 'faraday', '~> 0.9'
+  spec.add_dependency 'faraday_middleware', '~> 0.9'
   spec.add_dependency 'hashie', '~> 3.4.6'
   spec.add_dependency 'addressable', '~> 2.3.6'
 end
