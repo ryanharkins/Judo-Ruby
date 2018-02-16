@@ -20,7 +20,7 @@ Style/Documentation:
 
 # Offense count: 18
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/DotPosition:
+Layout/DotPosition:
   Enabled: false
 
 # Offense count: 73
