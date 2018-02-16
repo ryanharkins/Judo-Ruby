@@ -1,5 +1,5 @@
-require 'base/token_payment_tests'
-require 'base/integration_base'
+require_relative 'base/token_payment_tests'
+require_relative 'base/integration_base'
 
 class TokenPaymentTest < IntegrationBase
   include TokenPaymentTests

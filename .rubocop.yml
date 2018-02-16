@@ -20,7 +20,7 @@ Style/Documentation:
 
 # Offense count: 18
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/DotPosition:
+Layout/DotPosition:
   Enabled: false
 
 # Offense count: 73
@@ -38,7 +38,7 @@ Style/SymbolArray:
 
 # Offense count: 25
 Metrics/LineLength:
-  Max: 138
+  Max: 141
 
 # Offense count: 3
 # Configuration parameters: CountComments.
