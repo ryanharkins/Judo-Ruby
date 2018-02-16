@@ -17,7 +17,7 @@ models = %w(
 models.each { |model| require_relative '../lib/judopay/models/' + model }
 require 'securerandom'
 
-FactoryGirl.define do
+FactoryBot.define do
   trait :payment_details do
     your_consumer_reference 123
     sequence :your_payment_reference do |n|

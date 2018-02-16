@@ -1,12 +1,12 @@
 require 'test/unit'
 require 'judopay'
 require 'judopay/error'
-require 'factory_girl'
+require 'factory_bot'
 require_relative '../../spec/factories'
 require_relative '../helper/assertion_helper'
 
 class IntegrationBase < Test::Unit::TestCase
-  include FactoryGirl::Syntax::Methods
+  include FactoryBot::Syntax::Methods
   include TestHelpers
 
   def setup
