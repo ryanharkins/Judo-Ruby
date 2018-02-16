@@ -2,7 +2,6 @@ require 'judopay/error'
 require 'test/unit/assertions'
 
 module TestHelpers
-
   class AssertionHelper
     class << self
       include Test::Unit::Assertions
