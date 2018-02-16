@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'bundler'
   spec.add_dependency 'rake'
   spec.add_dependency 'virtus', '~> 1.0.2'
-  spec.add_dependency 'httpclient', '~> 2.4.0'
+  spec.add_dependency 'httpclient', '~> 2.4'
   spec.add_dependency 'activemodel', ['~> 4.1', '~> 4.2']
   spec.add_dependency 'faraday', '~> 0.9'
   spec.add_dependency 'faraday_middleware', '~> 0.9'
