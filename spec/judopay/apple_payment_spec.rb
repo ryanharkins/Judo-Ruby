@@ -67,11 +67,11 @@ describe Judopay::ApplePayment do
   it 'should raise an error when bad pk_payment passed' do
     expect(lambda do
       Judopay::ApplePayment.new(:pk_payment => '{"someInvalidJson}}')
-    end).to raise_error(Judopay::ValidationError, format(Judopay::PkPayment::WRONG_JSON_ERROR_MESSAGE, 'Judopay::PkPayment'))
+    end).to raise_error(Judopay::ValidationError, format(Judopay::PkPayment::WRONG_JSON_ERROR_MESSAGE, :foo => 'Judopay::PkPayment'))
 
     expect(lambda do
       Judopay::ApplePayment.new(:pk_payment => 1)
-    end).to raise_error(Judopay::ValidationError, format(Judopay::PkPayment::WRONG_OBJECT_ERROR_MESSAGE, 'Judopay::PkPayment'))
+    end).to raise_error(Judopay::ValidationError, format(Judopay::PkPayment::WRONG_OBJECT_ERROR_MESSAGE, :foo => 'Judopay::PkPayment'))
 
     expect(lambda do
       build(:apple_payment, :pk_payment => '{"valid_json":"Without token field"}').create

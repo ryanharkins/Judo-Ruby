@@ -1,5 +1,5 @@
-require 'base/payments_tests'
-require 'base/integration_base'
+require_relative 'base/payments_tests'
+require_relative 'base/integration_base'
 
 class PaymentTest < IntegrationBase
   include PaymentTests

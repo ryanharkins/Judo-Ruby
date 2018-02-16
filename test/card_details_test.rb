@@ -1,4 +1,4 @@
-require 'base/integration_base'
+require_relative 'base/integration_base'
 
 class CardDetailsTest < IntegrationBase
   def test_payment_with_missing_card_number

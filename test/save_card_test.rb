@@ -1,4 +1,4 @@
-require 'base/integration_base'
+require_relative 'base/integration_base'
 
 class SaveCardTests < IntegrationBase
   def get_model(params = {})
