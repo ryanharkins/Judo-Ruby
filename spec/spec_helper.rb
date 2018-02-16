@@ -1,7 +1,7 @@
 require_relative '../lib/judopay'
 require 'i18n'
 
-require 'factory_girl'
+require 'factory_bot'
 require 'factories'
 require 'webmock/rspec'
 
@@ -9,7 +9,7 @@ require 'webmock/rspec'
 I18n.enforce_available_locales = true
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include WebMock::API
 
   config.expect_with :rspec do |c|
