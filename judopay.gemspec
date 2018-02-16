@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard'
   spec.add_development_dependency 'test-unit'
   spec.add_development_dependency 'yard-xml'
-  spec.add_development_dependency 'factory_girl'
+  spec.add_development_dependency 'factory_bot'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'webmock'
   spec.add_dependency 'bundler'
@@ -34,5 +34,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday', '~> 0.9.0'
   spec.add_dependency 'faraday_middleware', '~> 0.9.1'
   spec.add_dependency 'hashie', '~> 3.4.6'
-  spec.add_dependency 'addressable', '~> 2.3.6'
+  spec.add_dependency 'addressable', '~> 2.3'
 end

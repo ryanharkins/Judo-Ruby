@@ -61,11 +61,11 @@ describe Judopay::AndroidPayment do
   it 'should raise an error when bad wallet passed' do
     expect(lambda do
       Judopay::AndroidPayment.new(:wallet => '{"someInvalidJson}}')
-    end).to raise_error(Judopay::ValidationError, format(Judopay::Wallet::WRONG_JSON_ERROR_MESSAGE, 'Judopay::Wallet'))
+    end).to raise_error(Judopay::ValidationError, format(Judopay::Wallet::WRONG_JSON_ERROR_MESSAGE, :foo => 'Judopay::Wallet'))
 
     expect(lambda do
       Judopay::AndroidPayment.new(:wallet => 1)
-    end).to raise_error(Judopay::ValidationError, format(Judopay::Wallet::WRONG_OBJECT_ERROR_MESSAGE, 'Judopay::Wallet'))
+    end).to raise_error(Judopay::ValidationError, format(Judopay::Wallet::WRONG_OBJECT_ERROR_MESSAGE, :foo => 'Judopay::Wallet'))
 
     expect(lambda do
       build(:android_payment, :wallet => '{"valid_json":"Without token field"}').create
