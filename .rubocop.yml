@@ -38,7 +38,7 @@ Style/SymbolArray:
 
 # Offense count: 25
 Metrics/LineLength:
-  Max: 138
+  Max: 141
 
 # Offense count: 3
 # Configuration parameters: CountComments.
