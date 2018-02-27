@@ -13,7 +13,7 @@ models = %w(
   void
   apple_payment
   android_payment
-  additions/encrypt_details
+  encrypt_details
 )
 models.each { |model| require_relative '../lib/judopay/models/' + model }
 require 'securerandom'

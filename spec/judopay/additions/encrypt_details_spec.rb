@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../../lib/judopay/models/additions/encrypt_details'
+require_relative '../../../lib/judopay/models/encrypt_details'
 
 describe Judopay::EncryptDetails do
   it 'should return one use token which can be used to transact' do
