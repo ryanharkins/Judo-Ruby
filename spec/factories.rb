@@ -13,6 +13,7 @@ models = %w(
   void
   apple_payment
   android_payment
+  encrypt_details
 )
 models.each { |model| require_relative '../lib/judopay/models/' + model }
 require 'securerandom'
@@ -186,6 +187,7 @@ FactoryBot.define do
       }
     end
   end
+
   factory :android_payment, :class => Judopay::AndroidPayment do
     payment_details
     valid_judo_id
@@ -205,4 +207,11 @@ FactoryBot.define do
       }
     end
   end
+
+  factory :encrypt_details, :class => Judopay::EncryptDetails do
+    card_number '4976000000003436'
+    expiry_date '12/20'
+    cv2 452
+  end
+
 end

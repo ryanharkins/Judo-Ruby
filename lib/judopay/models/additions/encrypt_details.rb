@@ -1,9 +1,7 @@
-require_relative '../model'
-require_relative 'payment'
-require_relative 'card_address'
+require_relative '../../model'
 
 module Judopay
-  class GetOneTimeToken < Model
+  class EncryptDetails < Model
     @resource_path = 'encryptions/paymentDetails'
     @valid_api_methods = [:create]
 
