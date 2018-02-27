@@ -217,7 +217,9 @@ FactoryBot.define do
 
   factory :one_use_token_payment, :class => Judopay::OneUseTokenPayment do
     your_consumer_reference 'oneUseTokenTestConsumer'
-    your_payment_reference 'oneUseTokenPayment'
+    sequence :your_payment_reference do |n|
+      SecureRandom.hex(21) + n.to_s
+    end
     amount 1.01
     currency "GBP"
   end
