@@ -14,6 +14,7 @@ models = %w(
   apple_payment
   android_payment
   encrypt_details
+  one_use_token_payment
 )
 models.each { |model| require_relative '../lib/judopay/models/' + model }
 require 'securerandom'
@@ -212,6 +213,13 @@ FactoryBot.define do
     card_number '4976000000003436'
     expiry_date '12/20'
     cv2 452
+  end
+
+  factory :one_use_token_payment, :class => Judopay::OneUseTokenPayment do
+    your_consumer_reference 'oneUseTokenTestConsumer'
+    your_payment_reference 'oneUseTokenPayment'
+    amount 1.01
+    currency "GBP"
   end
 
 end
