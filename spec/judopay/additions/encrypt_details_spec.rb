@@ -6,8 +6,8 @@ describe Judopay::EncryptDetails do
     stub_get('/encryptions/paymentDetails').
       to_return(:status => 200)
 
-    #verify response contains oneUseToken
+    # verify response contains oneUseToken
 
-    #verify we can use one time token to transact
+    # verify we can use one time token to transact
   end
 end
