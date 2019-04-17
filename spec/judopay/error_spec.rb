@@ -12,7 +12,7 @@ end
 describe Judopay::ValidationError do
   it 'returns fields that was set' do
     errors = ActiveModel::Errors.new(nil)
-    errors['some_field'] = 'some error'
+    errors['some_field'] << 'some error'
     e = Judopay::ValidationError.new('Error', errors)
     expect(e.to_s).to eq("Error\nField errors:\nsome_field: some error")
   end

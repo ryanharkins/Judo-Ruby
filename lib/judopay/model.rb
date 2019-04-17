@@ -125,10 +125,16 @@ module ActiveModel
       def validate_nested_model(*attr_names)
         validates_with BlockValidator, _merge_attributes(attr_names) do |model, attr, value|
           if value.is_a?(Judopay::Model) && !value.valid?
-            value.errors.each { |field, message| model.errors["#{attr}.#{field}"] = message }
+            add_judopay_errors(value, model)
           elsif !value.is_a?(Judopay::Model)
-            model.errors[attr] = 'should be valid Model object'
+            model.errors[attr] << 'should be valid Model object'
           end
+        end
+      end
+
+      def add_judopay_errors(value, model)
+        value.errors.each do |field, message|
+          model.errors["#{attr}.#{field}"] << message
         end
       end
     end
