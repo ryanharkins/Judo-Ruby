@@ -21,6 +21,7 @@ module Judopay
   def self.log(log_level, message)
     logger = self.configuration.logger
     return unless logger.is_a?(Logger)
+
     logger.progname = 'judopay'
     logger.add(log_level) { message }
   end
@@ -64,6 +65,7 @@ module Judopay
 
     def validate
       return true unless judo_id.to_s.empty? || api_token.to_s.empty? || api_secret.to_s.empty?
+
       raise Judopay::ValidationError, 'SDK configuration variables missing'
     end
   end

@@ -42,8 +42,8 @@ module Judopay
       end
 
       Judopay.log(Logger::DEBUG, response)
-
       return response if raw
+
       Response.create(response.body)
     end
   end

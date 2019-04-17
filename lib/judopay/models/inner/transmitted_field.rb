@@ -19,6 +19,7 @@ module Judopay
       def validate_data(data)
         data = parse_string(data) if data.is_a?(String)
         raise Judopay::ValidationError, format(WRONG_OBJECT_ERROR_MESSAGE, :foo => name) unless data.is_a?(Hash) || data.is_a?(Judopay::Mash)
+
         data = Judopay::Mash.new(data)
         data = data[field_name] if data.key?(field_name)
 

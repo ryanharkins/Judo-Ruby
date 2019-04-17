@@ -80,6 +80,7 @@ module Judopay
 
     def field_errors_message
       return '' if @field_errors.empty?
+
       "\nFields errors:\n#{@field_errors.join("\n")}"
     end
   end
@@ -100,6 +101,7 @@ module Judopay
 
     def model_errors
       return if @errors.nil?
+
       @errors.messages
     end
 
