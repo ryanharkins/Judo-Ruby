@@ -21,57 +21,57 @@ require 'securerandom'
 
 FactoryBot.define do
   trait :payment_details do
-    your_consumer_reference 123
-    sequence :your_payment_reference do |n|
+    your_consumer_reference { 123 }
+    sequence(:your_payment_reference) do |n|
       SecureRandom.hex(21) + n.to_s
     end
-    amount 1.01
+    amount { 1.01 }
   end
 
   trait :valid_card do
-    card_number '4976000000003436'
-    expiry_date '12/20'
-    cv2 452
+    card_number { '4976000000003436' }
+    expiry_date { '12/20' }
+    cv2 { 452 }
   end
 
   trait :declined_card do
-    card_number '4221690000004963'
-    expiry_date '12/20'
-    cv2 125
+    card_number { '4221690000004963' }
+    expiry_date { '12/20' }
+    cv2 { 125 }
   end
 
   trait :valid_token_details do
-    consumer_token '3UW4DV9wI0oKkMFS'
-    card_token 'SXw4hnv1vJuEujQR'
-    cv2 452
+    consumer_token { '3UW4DV9wI0oKkMFS' }
+    card_token { 'SXw4hnv1vJuEujQR' }
+    cv2 { 452 }
   end
 
   trait :valid_judo_id do
-    judo_id '100435-197'
+    judo_id { '100435-197' }
   end
 
   trait :valid_collection_or_refund_details do
-    receipt_id '1234'
-    amount 1.01
-    sequence :your_payment_reference do |n|
+    receipt_id { '1234' }
+    amount { 1.01 }
+    sequence(:your_payment_reference) do |n|
       SecureRandom.hex(21) + n.to_s
     end
   end
 
   trait :client_ip_address_and_user_agent do
-    client_ip_address '127.0.0.1'
-    client_user_agent 'Mozilla/5.0 (Windows NT 6.2; Win64; x64)...'
+    client_ip_address { '127.0.0.1' }
+    client_user_agent { 'Mozilla/5.0 (Windows NT 6.2; Win64; x64)...' }
   end
 
   factory :card_payment, :class => Judopay::CardPayment do
     payment_details
     valid_judo_id
     valid_card
-    currency 'GBP'
+    currency { 'GBP' }
 
     trait :declined do
-      card_number '4221690000004963'
-      cv2 125
+      card_number { '4221690000004963' }
+      cv2 { 125 }
     end
   end
 
@@ -79,11 +79,11 @@ FactoryBot.define do
     payment_details
     valid_card
     valid_judo_id
-    currency 'GBP'
+    currency { 'GBP' }
 
     trait :declined do
-      card_number '4221690000004963'
-      cv2 125
+      card_number { '4221690000004963' }
+      cv2 { 125 }
     end
   end
 
@@ -99,14 +99,14 @@ FactoryBot.define do
     payment_details
     valid_token_details
     valid_judo_id
-    currency 'GBP'
+    currency { 'GBP' }
   end
 
   factory :token_preauth, :class => Judopay::TokenPreauth do
     payment_details
     valid_token_details
     valid_judo_id
-    currency 'GBP'
+    currency { 'GBP' }
   end
 
   factory :web_payment, :class => Judopay::WebPayments::Payment do
@@ -114,7 +114,7 @@ FactoryBot.define do
     payment_details
     client_ip_address_and_user_agent
 
-    partner_service_fee 1.00
+    partner_service_fee { 1.00 }
   end
 
   factory :web_preauth, :class => Judopay::WebPayments::Payment do
@@ -122,7 +122,7 @@ FactoryBot.define do
     payment_details
     client_ip_address_and_user_agent
 
-    partner_service_fee 1.00
+    partner_service_fee { 1.00 }
   end
 
   factory :market_collection, :class => Judopay::Market::Collection do
@@ -136,18 +136,18 @@ FactoryBot.define do
   factory :save_card, :class => Judopay::SaveCard do
     valid_card
 
-    your_consumer_reference 123
+    your_consumer_reference { 123 }
   end
 
   factory :register_card, :class => Judopay::RegisterCard do
     payment_details
     valid_card
     valid_judo_id
-    currency 'GBP'
+    currency { 'GBP' }
 
     trait :declined do
-      card_number '4221690000004963'
-      cv2 125
+      card_number { '4221690000004963' }
+      cv2 { 125 }
     end
   end
 
@@ -158,7 +158,7 @@ FactoryBot.define do
   factory :apple_payment, :class => Judopay::ApplePayment do
     payment_details
     valid_judo_id
-    currency 'GBP'
+    currency { 'GBP' }
 
     client_details do
       {
@@ -169,22 +169,22 @@ FactoryBot.define do
 
     pk_payment do
       {
-        :token => {
-          :payment_instrument_name => 'Visa 9911',
-          :payment_network => 'Visa',
-          :payment_data => {
-            :version => 'EC_v1',
-            :data => 'someData',
-            :signature => 'someData',
-            :header => {
-              :ephemeralPublicKey => 'someData',
-              :publicKeyHash => 'someData',
-              :transactionId => 'someData'
+        token: {
+          payment_instrument_name: 'Visa 9911',
+          payment_network: 'Visa',
+          payment_data: {
+            version: 'EC_v1',
+            data: 'someData',
+            signature: 'someData',
+            header: {
+              ephemeralPublicKey: 'someData',
+              publicKeyHash: 'someData',
+              transactionId: 'someData'
             }
           }
         },
-        :billing_address => nil,
-        :shipping_address => nil
+        billing_address: nil,
+        shipping_address: nil
       }
     end
   end
@@ -192,36 +192,36 @@ FactoryBot.define do
   factory :android_payment, :class => Judopay::AndroidPayment do
     payment_details
     valid_judo_id
-    currency 'GBP'
+    currency {'GBP'}
 
     wallet do
       {
-        :encrypted_message => 'ZW5jcnlwdGVkTWVzc2FnZQ==',
-        :environment => 3,
-        :ephemeral_public_key => 'ZXBoZW1lcmFsUHVibGljS2V5',
-        :google_transaction_id => '123456789',
-        :instrument_details => '1234',
-        :instrument_type => 'VISA',
-        :public_key => 'someKey',
-        :tag => 'c2lnbmF0dXJl',
-        :version => 1
+        encrypted_message: 'ZW5jcnlwdGVkTWVzc2FnZQ==',
+        environment: 3,
+        ephemeral_public_key: 'ZXBoZW1lcmFsUHVibGljS2V5',
+        google_transaction_id: '123456789',
+        instrument_details: '1234',
+        instrument_type: 'VISA',
+        public_key: 'someKey',
+        tag: 'c2lnbmF0dXJl',
+        version: 1
       }
     end
   end
 
-  factory :encrypt_details, :class => Judopay::EncryptDetails do
-    card_number '4976000000003436'
-    expiry_date '12/20'
-    cv2 452
+  factory :encrypt_details, class: Judopay::EncryptDetails do
+    card_number { '4976000000003436' }
+    expiry_date { '12/20' }
+    cv2 { 452 }
   end
 
-  factory :one_use_token_payment, :class => Judopay::OneUseTokenPayment do
-    your_consumer_reference 'oneUseTokenTestConsumer'
-    sequence :your_payment_reference do |n|
+  factory :one_use_token_payment, class: Judopay::OneUseTokenPayment do
+    your_consumer_reference { 'oneUseTokenTestConsumer' }
+    sequence(:your_payment_reference) do |n|
       SecureRandom.hex(21) + n.to_s
     end
-    amount 1.01
-    currency "GBP"
+    amount { 1.01 }
+    currency { "GBP" }
   end
 
 end
