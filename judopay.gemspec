@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rake'
   spec.add_dependency 'virtus', '~> 1.0.2'
   spec.add_dependency 'httpclient', '~> 2.4'
-  spec.add_dependency 'activemodel', ['~> 5.1.7']
+  spec.add_dependency 'activemodel', ['~> 5.2']
   spec.add_dependency 'faraday', '~> 0.9'
   spec.add_dependency 'faraday_middleware', '~> 0.9'
   spec.add_dependency 'hashie', '~> 3.6.0'
